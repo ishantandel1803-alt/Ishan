@@ -1,0 +1,333 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap">
+<style>
+:root{--or:#ff4509;--mint:#a6f2e6;--card:#141414;--line:rgba(255,255,255,.08)}
+*{box-sizing:border-box}
+html,body{margin:0;width:1080px;height:1080px;overflow:hidden;background:#050505;font-family:Poppins,sans-serif;color:#fff}
+#bg{position:absolute;inset:0;overflow:hidden}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:90px 90px;-webkit-mask:radial-gradient(70% 60% at 50% 40%,#000,transparent)}
+.glow{position:absolute;left:50%;bottom:-430px;width:1500px;height:760px;translate:-50% 0;border-radius:50%;background:radial-gradient(closest-side,rgba(255,69,9,.5),rgba(255,69,9,.16) 45%,transparent 75%)}
+.arc{position:absolute;left:50%;bottom:-990px;width:1900px;height:1300px;translate:-50% 0;border-radius:50%;border-top:2px solid rgba(255,110,50,.7);box-shadow:0 -10px 60px rgba(255,69,9,.4)}
+.br{position:absolute;width:26px;height:26px;border:0 solid var(--or);z-index:50}
+.tl{left:40px;top:40px;border-left-width:2px;border-top-width:2px}.tr{right:40px;top:40px;border-right-width:2px;border-top-width:2px}
+.bl{left:40px;bottom:40px;border-left-width:2px;border-bottom-width:2px}.brr{right:40px;bottom:40px;border-right-width:2px;border-bottom-width:2px}
+
+/* intro / outro */
+#intro{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;z-index:20}
+#intro img{height:96px}
+#intro p{margin:0;font:400 34px Geist,sans-serif;color:rgba(255,255,255,.72)}
+#intro p b{color:var(--or);font-weight:500}
+
+/* camera + stage */
+#cam{position:absolute;left:0;top:0;width:1080px;height:1080px;z-index:10}
+#stage{position:absolute;left:0;top:0;width:916px;height:872px;transform-origin:0 0}
+.phone{position:absolute;top:0;width:418px;height:872px;border-radius:64px;padding:14px;background:#1b1b1d;
+  box-shadow:inset 0 0 0 2px #3a3a3e,inset 0 0 0 5px #0c0c0d,0 40px 80px -30px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.05)}
+#pa{left:0}#pb{left:498px}
+.screen{position:relative;width:390px;height:844px;border-radius:50px;overflow:hidden;background:#0b0b0b}
+.island{position:absolute;left:50%;top:11px;width:118px;height:34px;translate:-50% 0;border-radius:20px;background:#000;z-index:30}
+.sb{display:flex;justify-content:space-between;align-items:center;padding:18px 30px 0 34px;font:600 15px Poppins;height:50px}
+.sb i{display:inline-block;width:62px;height:12px;background:linear-gradient(90deg,#fff 0 30%,transparent 30% 38%,#fff 38% 62%,transparent 62% 70%,#fff 70%);border-radius:3px;opacity:.9}
+.top{display:flex;justify-content:space-between;align-items:center;padding:18px 22px 0}
+.top h1{margin:0;font:600 26px Poppins;letter-spacing:-.01em}
+.ico{display:flex;gap:14px}.ico span{width:22px;height:22px;border-radius:50%;border:2px solid #fff;opacity:.9}
+.welcome{padding:16px 22px 0}.welcome h2{margin:0;font:500 17px Poppins}.welcome p{margin:4px 0 0;font:400 12px Poppins;color:rgba(255,255,255,.45)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px 22px 0}
+.stats small{display:block;font:400 11px Poppins;color:rgba(255,255,255,.6)}
+.stats div div{display:flex;align-items:center;gap:8px;margin-top:6px;font:600 14px Poppins}
+.chip{padding:3px 9px;border-radius:999px;font:600 11px Poppins;color:#0b0b0b}
+.filters{display:flex;gap:8px;padding:18px 22px 0;white-space:nowrap}
+.filters span{padding:7px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.22);font:400 11px Poppins;color:rgba(255,255,255,.8)}
+.avail{display:flex;justify-content:space-between;align-items:center;padding:20px 22px 0;font:500 15px Poppins}
+.cards{display:flex;gap:12px;padding:14px 22px 0}
+.fund{position:relative;width:200px;border-radius:6px;overflow:hidden;background:#2f8f3c;flex:none}
+.fund .due{background:#41a84c;color:#d7ff7a;font:600 11px Poppins;text-align:center;padding:6px 0;letter-spacing:.02em}
+.fund .b{padding:12px 12px 0}
+.fund .nm{display:flex;align-items:center;gap:9px;font:600 15px/1.15 Poppins}
+.fund .nm i{width:36px;height:36px;border-radius:50%;background:#fff url(logo-mark.svg) center/70% no-repeat;flex:none}
+.fund .tk{display:flex;justify-content:space-between;margin-top:14px;font:500 12px Poppins}
+.bar{height:8px;border-radius:4px;background:rgba(0,0,0,.35);margin-top:6px;overflow:hidden}.bar b{display:block;height:100%;background:#9cff57}
+.fund .px{display:inline-block;margin-top:10px;padding:3px 8px;border-radius:4px;background:#1d5e27;font:600 12px Poppins}
+.fund .apr{margin-top:6px;font:700 19px Poppins;color:#e8ffd0}
+.fund .lm{margin-top:12px;background:#fff;color:#111;font:600 13px Poppins;padding:10px 12px;display:flex;justify-content:space-between}
+.soon{width:200px;border-radius:6px;background:linear-gradient(#26333a,#1a2328);flex:none;display:flex;align-items:center;justify-content:center;font:500 12px Poppins;color:rgba(255,255,255,.7);filter:saturate(.7)}
+.soon span{background:#1d4e66;padding:6px 10px;width:100%;text-align:center}
+.live{display:flex;gap:10px;align-items:center;margin-top:8px;font:500 10px Poppins;color:#d7ffd0}
+.live i{width:7px;height:7px;border-radius:50%;background:#9cff57;box-shadow:0 0 8px #9cff57}
+.nav{position:absolute;left:0;right:0;bottom:0;height:84px;display:flex;justify-content:space-around;padding-top:14px;background:#0b0b0b;border-top:1px solid var(--line)}
+.nav div{display:flex;flex-direction:column;align-items:center;gap:6px;font:400 10px Poppins;color:rgba(255,255,255,.5)}
+.nav div svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav .on{color:var(--mint)}
+
+/* invest sheet */
+.dim{position:absolute;inset:0;background:rgba(0,0,0,.6);z-index:15;opacity:0}
+.sheet{position:absolute;left:0;right:0;bottom:0;height:560px;z-index:16;background:#151517;border-radius:28px 28px 0 0;padding:14px 22px 0;border-top:1px solid rgba(255,255,255,.1)}
+.grab{width:44px;height:5px;border-radius:3px;background:rgba(255,255,255,.25);margin:0 auto 16px}
+.sh-h{display:flex;align-items:center;gap:12px}.sh-h i{width:46px;height:46px;border-radius:50%;background:#fff url(logo-mark.svg) center/70% no-repeat}
+.sh-h h3{margin:0;font:600 20px Poppins}.sh-h p{margin:2px 0 0;font:400 12px Poppins;color:rgba(255,255,255,.5)}
+.kv{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}
+.kv div{padding:10px;border-radius:12px;background:#1e1e21;font:400 10px Poppins;color:rgba(255,255,255,.55)}
+.kv b{display:block;margin-top:4px;font:600 15px Poppins;color:#fff}
+.kv .g{color:#9cff57}
+.what{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font:500 12px Poppins;color:var(--mint)}
+.what i{width:16px;height:16px;border-radius:50%;border:1.5px solid currentColor;font:600 10px/13px Poppins;text-align:center;font-style:normal}
+.tip{margin-top:8px;padding:0 14px;border-radius:12px;background:rgba(166,242,230,.1);border:1px solid rgba(166,242,230,.25);font:400 12px/1.5 Poppins;color:rgba(255,255,255,.85);overflow:hidden;height:0}
+.tip p{margin:12px 0}
+.amt{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding:14px;border-radius:14px;background:#1e1e21}
+.amt small{display:block;font:400 11px Poppins;color:rgba(255,255,255,.55)}.amt strong{font:600 22px Poppins}
+.step{display:flex;align-items:center;gap:14px}.step span{width:38px;height:38px;border-radius:50%;background:#2a2a2e;display:grid;place-items:center;font:500 20px Poppins}
+.step b{font:600 18px Poppins;min-width:26px;text-align:center}
+.cta{position:absolute;left:22px;right:22px;bottom:34px;height:56px;border-radius:14px;background:var(--mint);color:#062a26;display:flex;align-items:center;justify-content:center;font:600 17px Poppins}
+.toast{position:absolute;left:16px;right:16px;top:58px;z-index:25;padding:14px 16px;border-radius:16px;background:rgba(32,32,36,.92);border:1px solid rgba(255,255,255,.12);display:flex;gap:12px;align-items:center;box-shadow:0 20px 40px -10px rgba(0,0,0,.8)}
+.toast i{width:30px;height:30px;border-radius:50%;background:#9cff57;display:grid;place-items:center;color:#0b0b0b;font:700 16px Poppins;font-style:normal}
+.toast b{display:block;font:600 14px Poppins}.toast small{font:400 11px Poppins;color:rgba(255,255,255,.55)}
+
+/* portfolio */
+.tb{margin:16px 18px 0;border-radius:18px;padding:18px;background:
+  radial-gradient(120% 90% at 0% 0%,#5d7cff 0%,transparent 55%),radial-gradient(90% 90% at 100% 20%,#8a5cf0 0%,transparent 60%),radial-gradient(80% 80% at 60% 100%,#22b3c9,transparent 70%),#2a2f7a}
+.tb small{font:500 14px Poppins;color:rgba(255,255,255,.9)}.tb .v{margin-top:6px;font:700 34px Poppins;letter-spacing:-.01em}
+.tb .pf{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.tb .pf span{padding:6px 12px;border-radius:999px;background:#fff;color:#111;font:500 12px Poppins}.tb .pf span b{color:#1c8a3a}
+.tb .pf em{font-style:normal;padding:5px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.6);font:500 12px Poppins}
+.btns{display:grid;grid-template-columns:1fr 1fr 48px;gap:10px;margin-top:16px}
+.btns div{height:48px;border-radius:8px;display:flex;align-items:center;justify-content:center;font:600 14px Poppins}
+.btns .d{background:var(--mint);color:#062a26}.btns .w{background:#fff;color:#111}.btns .x{background:#fff}
+.div{padding:18px 18px 0;font:500 17px Poppins}
+.rings{display:flex;justify-content:space-between;padding:12px 18px 0}
+.rings div{display:flex;align-items:center;gap:8px;font:400 11px/1.2 Poppins;color:rgba(255,255,255,.8)}
+.rings i{width:36px;height:36px;border-radius:50%;border:3px solid;display:grid;place-items:center;font:500 10px Poppins;font-style:normal}
+.rows{padding:16px 18px 0;display:grid;gap:0}
+.row{position:relative;height:108px;border-radius:14px;padding:16px;margin-bottom:-24px;display:flex;justify-content:space-between;box-shadow:0 -10px 20px rgba(0,0,0,.35)}
+.row h4{margin:0;font:600 18px Poppins}.row small{display:block;font:600 11px Poppins;letter-spacing:.04em;opacity:.85;margin-top:2px}
+.row .r{text-align:right;font:600 16px Poppins}.row .r small{color:#d8ffc9;font-weight:500;letter-spacing:0}
+.row.p{background:linear-gradient(120deg,#e0287a,#a91c63)}.row.lp{background:linear-gradient(120deg,#2d5be3,#2340b5)}.row.gr{background:linear-gradient(120deg,#1fae62,#11804a)}
+.flash{position:absolute;inset:0;border-radius:14px;box-shadow:inset 0 0 0 3px #fff;opacity:0}
+
+/* overlays in stage space */
+.cursor{position:absolute;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;z-index:40;border:3px solid #fff;background:rgba(255,69,9,.35);box-shadow:0 0 0 2px rgba(0,0,0,.25),0 6px 16px rgba(0,0,0,.5)}
+.ripple{position:absolute;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;border:3px solid var(--or);z-index:39;opacity:0}
+.pill{position:absolute;z-index:41;white-space:nowrap;padding:9px 14px;border-radius:999px;background:var(--or);color:#fff;font:600 14px Poppins;box-shadow:0 10px 30px -6px rgba(255,69,9,.7)}
+
+/* captions + labels (screen space) */
+#cap{position:absolute;left:0;right:0;bottom:0;height:230px;z-index:30;background:linear-gradient(transparent,rgba(5,5,5,.92) 55%)}
+#cap p{position:absolute;left:80px;right:80px;bottom:60px;margin:0;text-align:center;font:500 33px/1.25 Geist,sans-serif;letter-spacing:-.01em}
+#tag{position:absolute;left:70px;top:78px;z-index:30;display:flex;align-items:center;gap:10px;padding:12px 20px 12px 16px;border-radius:999px;background:rgba(20,20,22,.88);border:1px solid rgba(255,69,9,.45);font:500 23px Geist;color:#fff}
+#tag i{width:11px;height:11px;border-radius:50%;background:var(--or);box-shadow:0 0 10px var(--or)}
+#marq{position:absolute;left:0;top:50%;translate:0 -50%;z-index:30;white-space:nowrap;font:500 74px Geist;letter-spacing:-.03em;color:#fff}
+#marq b{color:var(--or);font-weight:500}
+</style></head>
+<body>
+<div id="bg"><div class="grid"></div><div class="glow"></div><div class="arc"></div></div>
+<i class="br tl"></i><i class="br tr"></i><i class="br bl"></i><i class="br brr"></i>
+
+<div id="intro"><img src="logo.svg" alt=""><p>Invest <b>·</b> Stake <b>·</b> Earn</p></div>
+
+<div id="cam"><div id="stage">
+  <!-- Phone A: Marketplace -->
+  <div class="phone" id="pa"><div class="screen">
+    <div class="island"></div>
+    <div class="sb"><span>09:46</span><i></i></div>
+    <div class="top"><h1>Market Place</h1><div class="ico"><span></span><span></span></div></div>
+    <div class="welcome"><h2>Welcome, Sumit</h2><p>Explore and invest in selected portfolios made only for you!</p></div>
+    <div class="stats">
+      <div><small>Total Investments</small><div><span class="chip" style="background:#9cff57">0%</span>$9,999.00</div></div>
+      <div><small>Total Yield Received</small><div><span class="chip" style="background:#ff9b3d">$0.00</span>$0.00</div></div>
+    </div>
+    <div class="filters"><span>☰ Sort</span><span>Recently listed</span><span>Ending soon</span><span>Popular</span></div>
+    <div class="avail"><span>Available Opportunities</span><span style="opacity:.6">▦</span></div>
+    <div class="cards">
+      <div class="fund" id="fund">
+        <div class="due">DUE IN 11 DAYS</div>
+        <div class="b">
+          <div class="nm"><i></i>Zoth Index<br>Fund</div>
+          <div class="tk"><span>Tokens:</span><span id="tok">440/500</span></div>
+          <div class="bar"><b id="tokbar" style="width:88%"></b></div>
+          <div class="live"><i></i>Liquidity: High</div>
+          <span class="px">⬢ $2.05</span>
+          <div class="apr">APR: 18.89%</div>
+        </div>
+        <div class="lm"><span>Learn more</span><span>⟶</span></div>
+      </div>
+      <div class="soon"><span>More Coming Soon</span></div>
+    </div>
+    <div class="nav"><div class="on"><svg viewBox="0 0 24 24"><path d="M4 20h16"/><rect x="5" y="11" width="3" height="6" rx="1"/><rect x="10.5" y="7" width="3" height="10" rx="1"/><rect x="16" y="4" width="3" height="13" rx="1"/></svg>Market</div><div><svg viewBox="0 0 24 24"><path d="M12 3s6 6.4 6 11a6 6 0 0 1-12 0c0-4.6 6-11 6-11z"/><path d="M9 14.5a3 3 0 0 0 3 3"/></svg>Pools</div><div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>Explore</div><div><svg viewBox="0 0 24 24"><path d="M12 3l8 4-8 4-8-4z"/><path d="M4 12l8 4 8-4"/><path d="M4 16.5l8 4 8-4"/></svg>Stake</div><div><svg viewBox="0 0 24 24"><path d="M12 3v9h9"/><path d="M20.5 15A9 9 0 1 1 9 3.5"/></svg>Portfolio</div></div>
+
+    <div class="dim" id="dim"></div>
+    <div class="sheet" id="sheet">
+      <div class="grab"></div>
+      <div class="sh-h"><i></i><div><h3>Zoth Index Fund</h3><p>Tokenised real-world assets · Due in 11 days</p></div></div>
+      <div class="kv"><div>APR<b class="g">18.89%</b></div><div>Liquidity<b>High</b></div><div>Tokens left<b id="left">60</b></div></div>
+      <div class="what" id="what"><i>?</i>What does APR mean?</div>
+      <div class="tip" id="tip"><p>APR is the yearly return on your tokens. At 18.89%, $100 earns about $18.89 a year — paid from real-world assets, not speculation.</p></div>
+      <div class="amt"><div><small>Amount · <span id="ntok">5</span> tokens × $2.05</small><strong id="usd">$10.25</strong></div>
+        <div class="step"><span id="minus">−</span><b id="n">5</b><span id="plus">+</span></div></div>
+      <div class="cta" id="cta">Invest <span id="ctausd" style="margin-left:6px">$10.25</span></div>
+    </div>
+    <div class="toast" id="toast"><i>✓</i><div><b>Investment confirmed</b><small>10 ZIF tokens · $20.50 · added to your portfolio</small></div></div>
+  </div></div>
+
+  <!-- Phone B: Portfolio -->
+  <div class="phone" id="pb"><div class="screen">
+    <div class="island"></div>
+    <div class="sb"><span>09:46</span><i></i></div>
+    <div class="top"><h1>Portfolio</h1><div class="ico"><span></span><span></span></div></div>
+    <div class="tb">
+      <small>Total Balance ⓘ</small>
+      <div class="v" id="bal">$25,646.39</div>
+      <div class="pf"><span><b>+$25.84</b> This Week's Profit ›</span><em>▲ 20%</em></div>
+      <div class="btns"><div class="d">↙ Deposit</div><div class="w">↖ Withdraw</div><div class="x"></div></div>
+    </div>
+    <div class="div">Portfolio Diversification</div>
+    <div class="rings">
+      <div><i style="border-color:#5ef0d0">33%</i>Index<br>Funds</div>
+      <div><i style="border-color:#ff9b3d">33%</i>Liquidity<br>Pool</div>
+      <div><i style="border-color:#9cff57">34%</i>Spot<br>Assets</div>
+    </div>
+    <div class="rows">
+      <div class="row p" id="rowp"><div><h4>Index Funds</h4><small>TOTAL YIELDS</small></div><div class="r"><span id="idx">$5,876.34</span><small>▲ +$125.156</small></div><div class="flash" id="flash"></div></div>
+      <div class="row lp"><div><h4>Liquidity Pool</h4><small>TOTAL YIELDS</small></div><div class="r">$5,896.84<small>▲ +$125.156</small></div></div>
+      <div class="row gr"><div><h4>Spot Assets</h4><small>REWARDS</small></div><div class="r">$5,896.84<small>▲ +$125.156</small></div></div>
+    </div>
+    <div class="nav"><div><svg viewBox="0 0 24 24"><path d="M4 20h16"/><rect x="5" y="11" width="3" height="6" rx="1"/><rect x="10.5" y="7" width="3" height="10" rx="1"/><rect x="16" y="4" width="3" height="13" rx="1"/></svg>Market</div><div><svg viewBox="0 0 24 24"><path d="M12 3s6 6.4 6 11a6 6 0 0 1-12 0c0-4.6 6-11 6-11z"/><path d="M9 14.5a3 3 0 0 0 3 3"/></svg>Pools</div><div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>Explore</div><div><svg viewBox="0 0 24 24"><path d="M12 3l8 4-8 4-8-4z"/><path d="M4 12l8 4 8-4"/><path d="M4 16.5l8 4 8-4"/></svg>Stake</div><div class="on"><svg viewBox="0 0 24 24"><path d="M12 3v9h9"/><path d="M20.5 15A9 9 0 1 1 9 3.5"/></svg>Portfolio</div></div>
+  </div></div>
+
+  <div class="ripple" id="rip"></div>
+  <div class="cursor" id="cur"></div>
+  <div class="pill" id="pill">+10 ZIF · $20.50</div>
+</div></div>
+
+<div id="tag"><i></i><span id="tagt"></span></div>
+<div id="cap"><p id="capt"></p></div>
+<div id="marq">Discover <b>·</b> Invest <b>·</b> Earn <b>—</b> real-world assets for everyone <b>·</b> Discover <b>·</b> Invest <b>·</b> Earn</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const io = (k) => (k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);   // ease in-out cubic
+const out = (k) => 1 - Math.pow(1 - k, 3);
+const lerp = (a, b, k) => a + (b - a) * k;
+const money = (v) => '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+// positions of tap targets in stage coordinates (offsets ignore transforms)
+function pos(el, fx = .5, fy = .5) {
+  let x = 0, y = 0, n = el;
+  while (n && n.id !== 'stage') { x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent; }
+  return [x + el.offsetWidth * fx, y + el.offsetHeight * fy];
+}
+let P;
+function measure() {
+  P = { fund: pos($('fund'), .5, .55), what: pos($('what'), .3, .5), plus: pos($('plus')), cta: pos($('cta')),
+        out: [700, 980], start: [330, 760], rowp: pos($('rowp'), .7, .4), pillA: pos($('toast'), .5, .5) };
+}
+
+// camera keyframes: [time, cx, cy, scale]
+const WIDE = [458, 436, .98];
+const CAM = [[0, ...WIDE], [2.6, ...WIDE], [3.8, 209, 470, 1.36], [5.4, 209, 470, 1.36], [6.0, 209, 590, 1.36],
+             [9.7, 209, 590, 1.36], [10.8, 707, 420, 1.36], [12.4, 707, 420, 1.36], [13.4, ...WIDE], [16, ...WIDE]];
+function camAt(t) {
+  for (let i = 0; i < CAM.length - 1; i++) {
+    const [t0, ...a] = CAM[i], [t1, ...b] = CAM[i + 1];
+    if (t <= t1) { const k = io(seg(t, t0, t1)); return a.map((v, j) => lerp(v, b[j], k)); }
+  }
+  return CAM[CAM.length - 1].slice(1);
+}
+// cursor path: [time, point]
+function cursorAt(t) {
+  const K = [[4.2, P.start], [4.9, P.fund], [5.7, P.fund], [6.5, P.what], [7.5, P.what], [8.0, P.plus], [8.7, P.plus], [9.2, P.cta], [9.8, P.cta], [10.4, [P.cta[0] + 120, P.cta[1] + 80]]];
+  if (t <= K[0][0]) return K[0][1];
+  for (let i = 0; i < K.length - 1; i++) {
+    const [t0, a] = K[i], [t1, b] = K[i + 1];
+    if (t <= t1) { const k = io(seg(t, t0, t1)); return [lerp(a[0], b[0], k), lerp(a[1], b[1], k)]; }
+  }
+  return K[K.length - 1][1];
+}
+const TAPS = [5.0, 6.6, 8.1, 8.45, 9.3];
+const CAPS = [
+  [3.0, 5.6, 'Investors discover verified real-world assets, with APR and liquidity visible up front'],
+  [5.9, 7.9, 'Education appears in context, right where the decision happens'],
+  [8.0, 10.0, 'Pick an amount and invest in one tap, with no onboarding gate'],
+  [10.4, 12.6, 'The same event lands in the portfolio, and every yield updates in real time'],
+];
+const TAGS = [[3.4, 5.5, 'Live stats on every card'], [6.1, 7.8, 'Contextual explainer'], [10.6, 12.5, 'Mirrored to the portfolio']];
+
+function textAt(list, t) {
+  for (const [a, b, s] of list) if (t >= a - .35 && t <= b + .35) return [s, Math.min(seg(t, a - .35, a), 1 - seg(t, b, b + .35))];
+  return ['', 0];
+}
+
+function render(t) {
+  if (!P) measure();
+  // intro / outro logo
+  const introOut = seg(t, 2.0, 2.7), introIn = seg(t, 14.9, 15.7);
+  const li = t < 8 ? 1 - io(introOut) : io(introIn);
+  $('intro').style.opacity = li;
+  $('intro').style.transform = `scale(${1 + (1 - li) * .06})`;
+
+  // stage visibility
+  const sIn = io(seg(t, 2.2, 3.0)), sOut = io(seg(t, 14.4, 15.2));
+  const dimEnd = io(seg(t, 13.3, 13.9));
+  $('cam').style.opacity = sIn * (1 - sOut) * (1 - dimEnd * .72);
+  const [cx, cy, s0] = camAt(t), s = s0 * (0.94 + 0.06 * sIn);
+  $('stage').style.transform = `translate(${540 - cx * s}px, ${500 - cy * s}px) scale(${s})`;
+
+  // marketplace state: sheet
+  const sh = io(seg(t, 5.25, 5.85)) * (1 - io(seg(t, 9.55, 10.0)));
+  $('sheet').style.transform = `translateY(${(1 - sh) * 600}px)`;
+  $('dim').style.opacity = sh;
+  const tipK = io(seg(t, 6.75, 7.2));
+  $('tip').style.height = (tipK * 86) + 'px';
+  $('tip').style.opacity = tipK;
+  const n = t >= 8.45 ? 10 : t >= 8.1 ? 7 : 5;     // two taps: 5 -> 7 -> 10
+  $('n').textContent = n; $('ntok').textContent = n;
+  $('usd').textContent = money(n * 2.05); $('ctausd').textContent = money(n * 2.05);
+  const pressed = t >= 9.3 && t < 9.5;
+  $('cta').style.transform = `scale(${pressed ? .97 : 1})`;
+  $('cta').style.filter = pressed ? 'brightness(.9)' : '';
+  const toast = io(seg(t, 9.45, 9.75)) * (1 - io(seg(t, 11.6, 12.0)));
+  $('toast').style.transform = `translateY(${(1 - toast) * -120}px)`; $('toast').style.opacity = toast;
+  const tk = t >= 9.6 ? 450 : 440;
+  $('tok').textContent = `${tk}/500`; $('tokbar').style.width = (tk / 5) + '%'; $('left').textContent = 500 - tk;
+  ['plus', 'what'].forEach((id) => ($(id).style.transform = 'scale(1)'));
+  if ((t > 8.1 && t < 8.22) || (t > 8.45 && t < 8.57)) $('plus').style.transform = 'scale(.88)';
+
+  // portfolio: count-up after the pill lands
+  const cnt = out(seg(t, 10.9, 12.0));
+  $('bal').textContent = money(lerp(25646.39, 25666.89, cnt));
+  $('idx').textContent = money(lerp(5876.34, 5896.84, cnt));
+  $('flash').style.opacity = Math.sin(Math.PI * seg(t, 10.8, 11.9)) * .9;
+
+  // cursor + taps
+  const [x, y] = cursorAt(t);
+  const cv = seg(t, 4.0, 4.3) * (1 - seg(t, 10.0, 10.4));
+  const tapped = TAPS.find((a) => t >= a && t < a + .5);
+  const press = TAPS.some((a) => t >= a && t < a + .14);
+  Object.assign($('cur').style, { left: x + 'px', top: y + 'px', opacity: cv, transform: `scale(${press ? .78 : 1})` });
+  if (tapped !== undefined) {
+    const k = seg(t, tapped, tapped + .5);
+    Object.assign($('rip').style, { left: x + 'px', top: y + 'px', opacity: (1 - k) * cv, transform: `scale(${1 + k * 1.6})` });
+  } else $('rip').style.opacity = 0;
+
+  // pill flies from the toast to the Index Funds row
+  const pk = io(seg(t, 9.85, 10.85));
+  const pv = seg(t, 9.75, 9.9) * (1 - seg(t, 10.8, 11.0));
+  const px = lerp(P.pillA[0], P.rowp[0], pk), py = lerp(P.pillA[1], P.rowp[1], pk) - Math.sin(Math.PI * pk) * 120;
+  const pel = $('pill');
+  Object.assign(pel.style, { left: (px - pel.offsetWidth / 2) + 'px', top: (py - pel.offsetHeight / 2) + 'px', opacity: pv, transform: `scale(${1 - pk * .15})` });
+
+  // captions + tags
+  const [c, ca] = textAt(CAPS, t); if (c) $('capt').textContent = c;
+  $('capt').style.opacity = ca; $('capt').style.transform = `translateY(${(1 - ca) * 12}px)`;
+  const [g, ga] = textAt(TAGS, t); if (g) $('tagt').textContent = g;
+  $('tag').style.opacity = ga; $('tag').style.transform = `translateX(${(1 - ga) * -16}px)`;
+
+  // closing marquee
+  const mv = seg(t, 13.3, 13.7) * (1 - seg(t, 14.7, 15.1));
+  $('marq').style.opacity = mv;
+  $('marq').style.transform = `translateX(${lerp(1080, -1400, seg(t, 13.1, 15.3))}px)`;
+}
+window.render = render;
+window.ready = document.fonts.ready.then(() => { measure(); render(0); return true; });
+</script>
+</body></html>

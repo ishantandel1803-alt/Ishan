@@ -1,0 +1,11 @@
+# Private notes (kept local only)
+content/
+
+# Old portfolio source & raw recordings
+Ishan-s-Portfolio-V2-main 3/
+*.mov
+
+# OS / tooling
+.DS_Store
+node_modules/
+motion/**/frames/

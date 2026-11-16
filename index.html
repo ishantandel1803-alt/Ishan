@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light" />
+  <title>Ishan — Product Designer</title>
+  <meta name="description" content="Ishan is a product designer who turns messy problems into simple, measurable products." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Instrument+Serif:ital@1&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-bg="hero">
+  <a class="skip" href="#introduction">Skip to content</a>
+
+  <!-- iOS-style floating tab bar -->
+  <nav class="tabbar" aria-label="Primary">
+    <span class="tab-glow" aria-hidden="true"></span>
+    <a class="tab" href="#introduction" data-section="introduction">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5 12 3.5l8.5 7V20a1 1 0 0 1-1 1h-5v-6h-5v6h-5a1 1 0 0 1-1-1z"/></svg>
+      <span>Home</span>
+    </a>
+    <a class="tab" href="#work" data-section="work">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.8"/></svg>
+      <span>Work</span>
+    </a>
+    <a class="tab" href="#about" data-section="about">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c.8-4 4-6.5 8-6.5s7.2 2.5 8 6.5"/></svg>
+      <span>About me</span>
+    </a>
+    <a class="tab" href="resume.pdf" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v4h4M8.5 12h7M8.5 16h5"/></svg>
+      <span>Resume</span>
+    </a>
+  </nav>
+
+  <button class="spark-toggle" type="button" aria-label="Spark">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><g stroke="currentColor" stroke-width="3.4" stroke-linecap="round">
+      <line x1="20" y1="3" x2="20" y2="14"/><line x1="20" y1="26" x2="20" y2="37"/>
+      <line x1="3" y1="20" x2="14" y2="20"/><line x1="26" y1="20" x2="37" y2="20"/>
+      <line x1="8" y1="8" x2="15.8" y2="15.8"/><line x1="24.2" y1="24.2" x2="32" y2="32"/>
+      <line x1="32" y1="8" x2="24.2" y2="15.8"/><line x1="15.8" y1="24.2" x2="8" y2="32"/>
+    </g></svg>
+  </button>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section id="introduction" class="hero" data-bg="hero">
+      <p class="hero-kicker">Hey, I'm Ishan Tandel</p>
+      <div class="hero-head-wrap">
+        <h1 class="hero-title">Product &amp; UX designer building design systems and products people rely on.</h1>
+        <p class="hero-sub">I connect the decisions, the team, and the outcome, <span class="sketch">increasingly with AI in the loop.<svg class="sketch-line" viewBox="0 0 300 14" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9.5 C 40 5, 80 11, 125 7.5 S 215 4.5, 252 8 S 287 9.5, 297 6"/><path d="M18 12 C 70 9.5, 140 12.5, 205 10 S 270 9.8, 290 11"/></svg></span></p>
+      </div>
+      <div class="hero-backed">
+        <span class="hb-label">Worked at startups backed by</span>
+        <span class="hb-logo hb-sequoia" role="img" aria-label="Sequoia">SEQUOIA<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 11V5M4.5 11V2M7 11V4M9.5 11V6M1 11h10" stroke="currentColor" stroke-width="1.2" fill="none"/></svg></span>
+        <span class="hb-logo hb-yc" role="img" aria-label="Y Combinator"><b>Y</b>Combinator</span>
+      </div>
+
+      <div class="hero-tabs" role="tablist" aria-label="About me at a glance">
+        <div class="hero-tabs-track">
+          <button class="hero-tab" role="tab" type="button">
+            <span class="tab-icon" aria-hidden="true">💻</span>
+            <span class="tab-label">3+ yrs</span>
+          </button>
+          <button class="hero-tab" role="tab" type="button">
+            <span class="tab-icon" aria-hidden="true">🗂️</span>
+            <span class="tab-label">B2C &amp; B2B Industries</span>
+          </button>
+          <button class="hero-tab" role="tab" type="button">
+            <span class="tab-avatar" aria-hidden="true">I</span>
+            <span class="tab-label">Product Designer</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-stage">
+        <!-- Photo box: slides out beside the card on steps that set data-photo -->
+        <figure class="hero-photo" aria-hidden="true"><img src="img/about/hero-card.jpg" alt="" draggable="false"></figure>
+        <div class="hero-card">
+          <div class="card-flip">
+            <div class="card-face face-a" aria-live="polite"></div>
+            <div class="card-face face-b" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card content for each pill (in pill order). The script copies one onto the card's hidden face, then flips. -->
+      <template id="card-content">
+        <div class="card-content">
+            <div class="chips">
+              <span class="chip"><span class="chip-ic">🚀</span>Stealth startup</span>
+              <span class="chip"><span class="chip-ic">💸</span>Aspora</span>
+              <span class="chip"><span class="chip-ic">🪙</span>Zoth.io</span>
+            </div>
+            <p class="card-label">3+ Years</p>
+        </div>
+        <div class="card-content">
+            <div class="chips">
+              <span class="chip"><span class="chip-ic">🤖</span>AI</span>
+              <span class="chip"><span class="chip-ic">💳</span>Fintech</span>
+              <span class="chip"><span class="chip-ic">🩺</span>Healthtech</span>
+            </div>
+            <p class="card-label">Industries</p>
+        </div>
+        <div class="card-content" data-photo>
+            <div class="chips">
+              <span class="chip"><span class="chip-ic">✏️</span>Product Design</span>
+              <span class="chip"><span class="chip-ic">🤖</span>AI Products</span>
+              <span class="chip"><span class="chip-ic">🧩</span>Design Systems</span>
+            </div>
+            <p class="card-label">Product Designer</p>
+        </div>
+      </template>
+
+      <a href="#work" class="mouse" aria-label="Scroll to the next section"><span></span></a>
+    </section>
+
+    <!-- ============ WORK ============ -->
+    <!-- Cards and filter pills are rendered from the PROJECTS list at the top of projects.js — edit content there. -->
+    <section id="work" class="work" data-bg="hero">
+      <h2 class="section-title">Work I'm proud of</h2>
+      <div class="pro-section">
+        <div class="pro-filters" role="group" aria-label="Filter projects by type"></div>
+        <div class="pro-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============ VISUAL ARCHIVE ============ -->
+    <!-- A glass folder that opens into draggable pictures. Pictures and label live at the top of folder.js. -->
+    <section id="visual" class="visual" data-bg="hero" aria-label="Visual design archive">
+      <div class="prism-folder"></div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section id="about" class="about" data-bg="green">
+      <div class="about-inner">
+        <p class="about-text">The best design doesn't ask<br class="about-break"> people to learn something new.<br class="about-break"> It fits the way they already<br class="about-break"> work, then <span class="about-bold">makes it easier</span></p>
+        <a class="btn about-cta" href="#about-me">
+          more about me
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ TESTIMONIALS ============ -->
+    <!-- Quotes are set at the top of contact.js -->
+    <section id="testimonials" class="testimonials" data-bg="hero">
+      <h2 class="section-title tm-title">Beyond the work, there's the working together</h2>
+      <div class="tm-viewport"><div class="tm-track"></div></div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <!-- Links are set at the top of contact.js -->
+    <section id="contact" class="contact" data-bg="green" aria-label="Get in touch">
+      <div class="contact-table"></div>
+    </section>
+  </main>
+
+  <div class="copy-toast glass-toast" role="status" aria-live="polite"></div>
+
+  <!-- ============ ABOUT ME PAGE (opens from the green section) ============ -->
+  <!-- Text, photos and captions are set at the top of about.js -->
+  <div id="about-page" class="about-page" role="dialog" aria-modal="true" aria-labelledby="about-page-title" hidden>
+    <button class="about-back" type="button" aria-label="Back">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    </button>
+    <section class="ap-fold ap-fold--orbit">
+      <h2 id="about-page-title" class="ap-head"></h2>
+      <div class="orbit" role="group" aria-roledescription="photo reel" aria-label="Photographs circling a caption">
+        <div class="orbit-stage"></div>
+        <div class="orbit-cap" aria-live="polite"><span></span></div>
+      </div>
+    </section>
+    <section class="ap-fold ap-fold--profile">
+      <div class="ap-profile">
+        <p class="ap-bio ap-bio--lead"></p>
+        <div class="ap-photo"></div>
+        <p class="ap-bio ap-bio--tail"></p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Pill that replaces the cursor over the About section (desktop) -->
+  <div class="cursor-label" aria-hidden="true">
+    <span class="cursor-label-text">more about me</span>
+    <svg class="ci ci-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    <svg class="ci ci-out" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="8 7 17 7 17 16"/></svg>
+    <svg class="ci ci-copy" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+    <svg class="ci ci-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12.5 9.5 18 20 6"/></svg>
+  </div>
+
+  <script src="projects.js"></script>
+  <script src="script.js"></script>
+  <script src="folder.js"></script>
+  <script src="about.js"></script>
+  <script src="contact.js"></script>
+</body>
+</html>

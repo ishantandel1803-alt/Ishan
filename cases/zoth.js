@@ -1,0 +1,238 @@
+/* ---------- Zoth.io case study ----------
+   Source: Zoth case study on the previous portfolio (Ishan-s-Portfolio-V2).
+   Open as case.html?p=zoth. See cases/project-one.js for every block type.
+------------------------------------------ */
+const CASE = {
+  title: 'Zoth.io: Tokenised asset marketplace',
+  accent: '#1673d6',
+  blocks: [
+
+    { type: 'hero',
+      icon: 'img/zoth/icon.svg',
+      title: 'Turning Zoth into a *tokenised asset marketplace*',
+      intro: 'Zoth.io is an RWA investment platform backed by SOSV. I helped it grow from fractional real-estate listings into a marketplace where anyone can invest, stake and earn from tokenised real-world assets.',
+      meta: [
+        { label: 'Role',     value: 'Product Designer' },
+        { label: 'Team',     value: 'Lead designer, PM, 10 eng & QA' },
+        { label: 'Timeline', value: '4 months to go-live' },
+        { label: 'Platform', value: 'Mobile app' },
+      ] },
+
+    { type: 'figure',
+      images: [{ src: 'img/zoth/problem-mockup.png', label: 'Zoth marketplace on a phone' }] },
+
+    { type: 'facts',
+      eyebrow: 'Project at a glance',
+      title: 'Research, three directions, and a design that earned *buy-in*',
+      text: 'I researched users and competitors, proposed 3 strategic directions, designed an experience that earned stakeholder buy-in, and delivered within tight resource and timeline constraints. The new DeFi model enabled fractional access, real yield and cross-chain liquidity, making RWAs truly scalable and inclusive.',
+      groups: [
+        { label: 'What I did', items: [
+          'Researched users and competitors',
+          'Proposed 3 strategic directions',
+          'Designed an experience that earned stakeholder buy-in',
+          'Delivered in 4 months, from initiation to go-live',
+        ] },
+        { label: 'Business impact', items: [
+          '*10K+ members* joined via the Index Fund feature',
+          'Unlocked institutional partnership and compliance conversations',
+          'Design supported the full retail → RWA infrastructure pivot',
+        ] },
+        { label: 'Team', items: [
+          'Ishan: Product Designer',
+          'Sayali: Lead Product Designer',
+          'Badal Agrawal: Product Manager',
+          '10 engineers & QA',
+        ] },
+      ],
+      callout: { label: 'The challenge in one sentence', text: "Zoth's retail-facing real-estate tokenisation model struggled to scale due to limited liquidity and niche investors." } },
+
+    { type: 'cards', cols: 2,
+      eyebrow: 'Context',
+      title: 'From fractional property to *real-world assets* across chains',
+      text: 'Traditional investment platforms have high barriers: large minimum capital and limited access.',
+      items: [
+        { title: 'Earlier: fractional real estate', text: "Zoth's old model was retail-facing real-estate tokenisation, where users could buy fractions of a property." },
+        { title: 'Now: RWA restaking infrastructure', text: 'Zoth built restaking infrastructure for RWAs, expanding beyond real estate to yield-bearing assets across chains.' },
+      ] },
+
+    { type: 'statement', dark: true,
+      eyebrow: 'Goal',
+      title: 'Let anyone *invest, stake and earn* from real-world assets',
+      text: 'Design an app that democratises access to real-world assets (RWAs) by letting users invest, stake and earn from tokenised assets securely and seamlessly.' },
+
+    { type: 'cards', cols: 2,
+      eyebrow: 'Problem worth solving',
+      title: 'Digital assets, but still *high-ticket and illiquid*',
+      text: '*80% of users were small-ticket retail investors.* They were early adopters, but limited liquidity slowed overall growth. Institutional investors were hesitant because of regulatory clarity and liquidity concerns.',
+      items: [
+        { title: 'User problem', text: "Zoth made assets digital but didn't solve accessibility: investments were still high-ticket and illiquid. The new model introduced Zoth tokens and a DeFi layer, so users could invest in real-world assets at smaller ticket sizes while earning real yield in a liquid marketplace." },
+        { title: 'Business problem', text: "Zoth's real-estate tokenisation model struggled to scale because of limited liquidity and niche investors. The new DeFi model solved this with fractional access, real yield and cross-chain liquidity." },
+      ] },
+
+    { type: 'figure',
+      images: [{ src: 'img/zoth/goal-mockup.png', label: 'Zoth Index Fund card in the app', max: 640 }] },
+
+    { type: 'cards', cols: 2,
+      eyebrow: 'Design strategy',
+      title: 'Four areas I focused on',
+      text: 'Looking at Zoth from both retail and institutional perspectives, it was clear why adoption was uneven. Small-ticket investors liked the concept but lacked trust; larger investors hesitated over liquidity and regulation. I worked with stakeholders, ran competitive research and audited the platform to find four focus areas.',
+      items: [
+        { title: 'Senior stakeholders', text: "What is their vision for Zoth's scale: retail-first or infrastructure-ready?" },
+        { title: 'The users', text: 'Who are our core investors, small-ticket retail or institutions, and what are their pain points?' },
+        { title: 'The market', text: 'What can we learn from global RWA and fractional investing platforms?' },
+        { title: "Zoth's platform", text: 'Where are the usability gaps, and how can we redesign for trust, clarity and scale?' },
+      ] },
+
+    { type: 'figure',
+      images: [{ src: 'img/zoth/design-process-board.png', label: 'Design process board', caption: 'Design process board: Empathise → Define → Ideate → Prototype. Click to open full size.' }] },
+
+    { type: 'cards', cols: 3,
+      eyebrow: 'Stakeholder vision',
+      title: 'Leadership wanted Zoth to become *an RWA leader*',
+      text: 'In early meetings, leadership made it clear that Zoth should evolve beyond a fractional marketplace into a scalable platform for both retail and institutional investors.',
+      items: [
+        { title: 'Envision a new vertical', text: 'Shift from $10–$50 retail tickets to also targeting high-value investors.' },
+        { title: 'Emerge as an RWA leader', text: 'Stand apart from small marketplaces by becoming a global RWA destination.' },
+        { title: 'Leverage existing traction', text: 'Use early real-estate success and compliance strengths to scale further.' },
+      ],
+      after: { label: 'My work began there', items: [
+        'Aligned with my manager on the business objective',
+        'Drafted a project plan with milestones and scope',
+        'Mapped key deliverables and timelines',
+        'Planned 1–2 day buffers for each milestone',
+        'Weekly syncs with product and design teams',
+        'Bi-weekly syncs with key stakeholders',
+        'Regular brainstorming, feedback and check-ins with my manager',
+      ] } },
+
+    { type: 'list',
+      eyebrow: 'Users',
+      title: 'Users wanted *trust and clarity*',
+      text: 'We used secondary research, early platform data and competitive analysis to understand core users. Small-ticket investors were enthusiastic but lacked trust in and understanding of tokenised assets. Institutional investors stayed hesitant because of unclear compliance and liquidity risks.',
+      label: 'Retail investor pain points',
+      items: [
+        'Intimidated by blockchain and DeFi terminology',
+        'Spent *10–15 minutes* trying to understand what they were investing in',
+        'Lacked trust in tokenised assets and needed proof of security',
+        "Couldn't easily understand compliance, liquidity or potential returns",
+        'Dropped off during KYC or wallet connection',
+        'Felt overwhelmed by DeFi jargon before reaching any asset listing',
+        'Preferred simple flows and plain language over institutional dashboards',
+        'Needed social proof, like member counts and returns, before acting',
+        'Hesitant to commit capital without a visible track record',
+      ],
+      images: [
+        { src: 'img/zoth/user-journey-map.png', label: 'Customer journey map', caption: 'Customer journey maps for two retail investors.' },
+        { src: 'img/zoth/user-persona.png', label: 'Empathy maps and personas', caption: 'Empathy maps and user personas.' },
+      ] },
+
+    { type: 'list',
+      eyebrow: 'Competition',
+      title: 'A gap between *retail access* and institutional scale',
+      text: 'I analysed fractional ownership and RWA platforms. Most players focused either on real-estate listings for retail or on institutional-grade infrastructure, leaving a middle ground for Zoth.',
+      items: [
+        "*Retail RWA startups* target small-ticket users but fail to inspire long-term trust and liquidity.",
+        '*Institutional protocols* like Centrifuge focus on large-scale adoption, leaving retail investors underserved.',
+        "*Zoth's opportunity* is to bridge retail access and institutional-grade infrastructure.",
+        '*Trust is the foundation*: transparency, compliance and education attract both small and large investors.',
+      ],
+      callout: { label: 'Positioning for Zoth', text: 'Make RWAs accessible for retail while staying scalable and compliant for institutions.' } },
+
+    { type: 'list',
+      eyebrow: 'Platform study',
+      title: 'A strong idea held back by *clarity and trust*',
+      text: "A UX audit of Zoth's old model showed critical gaps. Fractional real estate was a strong idea, but the platform lacked clarity, trust-building features and a smooth investor journey.",
+      items: [
+        "No central view of assets and returns, so users couldn't understand options or risks",
+        'No brand identity to build trust in a financial product',
+        'Listing-only experience, with no performance insights or education hooks',
+        'Fragmented information: compliance, liquidity and returns were hard to find',
+        'No filtering for high-value investments, so users were overwhelmed by underfunded listings',
+      ] },
+
+    { type: 'cards', cols: 3,
+      eyebrow: 'Ideation',
+      title: 'Exploring every direction *worth testing*',
+      text: "We brainstormed ways to improve Zoth's investor experience: building trust, simplifying discovery and making tokenised investing more intuitive for retail users.",
+      items: [
+        { title: 'Seamless investment flow', text: 'Research, analyse and invest in one continuous flow, right from asset discovery.' },
+        { title: 'Trust through education', text: 'Bite-sized learning, explainer videos and guided onboarding for new investors.' },
+        { title: 'Bridge retail and institutional', text: 'Systems that serve $10 retail users today and $10K institutional players tomorrow.' },
+        { title: 'Unified dashboard', text: 'Real-time portfolio performance, token value and liquidity status in one view.' },
+        { title: 'Gamified discovery', text: 'Badges, tiers and milestone unlocks to keep retail investors learning and reinvesting.' },
+        { title: 'Zoth Mini app', text: 'A lightweight, mobile-first app for quick investments, updates and referrals, like Revolut or Groww.' },
+      ] },
+
+    { type: 'approaches',
+      eyebrow: 'Approach',
+      title: 'Three directions, *one foundation*',
+      items: [
+        { status: 'rejected',
+          title: 'Education-first flow',
+          text: 'Most retail users had zero exposure to RWAs or DeFi. This approach built awareness first, explaining investment types, yields and risks before leading users to discovery and purchase.',
+          pros: ['Could reduce hesitation and fear of losing money', 'Explaining compliance and security upfront builds early trust', 'A knowledge hub users can revisit before investing', 'Bridges the gap between traditional and blockchain investing'],
+          cons: ['Too content-heavy: impatient users drop off', 'Slows discovery; most users want to see assets first', 'Redundant for returning investors', 'A linear structure breaks the seamless flow expected in fintech'],
+          decision: 'Education needed to feel integrated, not instructional, so we moved it out of the main flow entirely.' },
+        { status: 'partial',
+          title: 'Data-led trust',
+          text: 'Lead with live asset performance: APR, liquidity status and token availability. Let real numbers build trust instead of copy.',
+          pros: ["Experienced investors don't need education, they need evidence", 'Shorter time-to-investment for users who know DeFi', 'Real-time data builds confidence faster than explainer text', 'Mirrors trusted fintech patterns like Groww and Robinhood'],
+          cons: ['Can feel like a Bloomberg terminal: powerful but intimidating', 'Data without context overwhelms first-time investors', "Doesn't close the trust gap for users new to tokenised assets"],
+          decision: 'We embedded live stats into the discovery cards, always paired with plain-language context.' },
+        { status: 'adopted',
+          title: 'Contextual onboarding marketplace',
+          text: 'Drop users straight into a curated asset marketplace with no onboarding gate. Education arrives in context, through tooltips and inline explainers at the exact point of need.',
+          pros: ['Gets users to the product immediately', 'Shortens time-to-first-action significantly', 'Contextual hints feel helpful, not instructional', 'Scales to retail and institutional users without friction'],
+          cons: ['Needs carefully placed education hooks', 'Harder to design for varying knowledge levels'],
+          decision: 'This became the foundation of the final design direction.' },
+      ] },
+
+    { type: 'insights',
+      eyebrow: 'Key insights',
+      title: 'What we learned',
+      items: [
+        { title: 'Trust is built by showing, not telling', text: 'Retail users responded better to live performance data than to educational copy. Real numbers reduced hesitation faster than any explainer.' },
+        { title: 'Contextual education beats front-loaded onboarding', text: 'Users dropped off when forced through education gates. Inline tooltips and explainers at the point of decision performed much better.' },
+        { title: 'Same foundation, different layers', text: 'Retail and institutional investors shared core needs: clarity, compliance visibility and portfolio transparency. The difference was depth, not direction.' },
+        { title: 'Liquidity visibility drives conversion', text: 'Showing real-time liquidity on asset cards reduced the most common drop-off point: hesitation before the first investment.' },
+      ] },
+
+    { type: 'figure',
+      eyebrow: 'Design system',
+      title: 'One *source of truth* for retail and institutional',
+      text: 'I built a scalable design system for Zoth, covering colour tokens, typography, a component library and spacing rules. It supports both the retail app and the institutional dashboard.',
+      images: [{ src: 'img/zoth/component-library.png', label: 'Zoth component library', max: 760, bg: '#121214', caption: 'Component library. Click to open full size.' }] },
+
+    { type: 'gallery', cols: 3,
+      eyebrow: 'Visual design & UI',
+      title: 'Premium, clear, and *built to scale*',
+      text: 'The final UI put trust, clarity and scale first: a dark-mode-first palette with high-contrast data visualisation, modular investment cards and a persistent portfolio tracker.',
+      images: [
+        { src: 'img/zoth/marketplace-screens.png',     label: 'Marketplace' },
+        { src: 'img/zoth/liquidity-pool-screens.png',  label: 'Liquidity pool' },
+        { src: 'img/zoth/portfolio-screens.png',       label: 'Portfolio' },
+        { src: 'img/zoth/stake-screens.png',           label: 'Stake' },
+        { src: 'img/zoth/explore-screens.png',         label: 'Explore' },
+        { src: 'img/zoth/account-screens.png',         label: 'Account' },
+      ] },
+
+    { type: 'prototype',
+      eyebrow: 'Interactive prototype',
+      title: 'The full investor journey, *clickable*',
+      text: 'The Figma prototype covers the whole journey, from landing on the marketplace to staking an asset and tracking returns. It was tested with 8 participants across retail and semi-institutional profiles.',
+      href: 'https://www.figma.com/proto/QOi61toAIOFLpbJgvwcLI0/Portfolio?node-id=2655-641&t=rPomc9R9rpZzEEdQ-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=2461%3A269',
+      label: 'Open Figma prototype',
+      image: 'img/zoth/prototype.svg' },
+
+    { type: 'results', dark: true,
+      eyebrow: 'Impact',
+      title: 'What changed',
+      items: [
+        { num: '10K+', label: 'members joined through the Index Fund feature' },
+        { num: '4',    label: 'months from initiation to go-live' },
+        { num: '8',    label: 'participants tested the prototype' },
+      ] },
+
+    { type: 'end', title: 'Thanks for reading', cta: { label: 'Back to work', href: 'index.html#work' } },
+  ],
+};

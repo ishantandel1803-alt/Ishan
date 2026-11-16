@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light" />
+  <title>Case study — Ishan Tandel</title>
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;700&family=Instrument+Serif:ital@1&display=swap" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="case.css" />
+</head>
+<body class="case-body" data-bg="hero">
+  <a class="cs-back" href="index.html#work" aria-label="Back to work">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    <span>Back to work</span>
+  </a>
+  <div class="cs-progress" aria-hidden="true"><span></span></div>
+
+  <main id="case" class="case"></main>
+
+  <!-- Each case study's content lives in cases/<name>.js.
+       Link to it as case.html?p=<name> (no ?p= shows cases/project-one.js). -->
+  <script>
+    (() => {
+      const name = (new URLSearchParams(location.search).get('p') || 'project-one').replace(/[^a-z0-9-]/gi, '');
+      const load = (src, next) => { const s = document.createElement('script'); s.src = src; s.onload = next; document.body.appendChild(s); };
+      load(`cases/${name}.js`, () => load('case.js'));
+    })();
+  </script>
+</body>
+</html>

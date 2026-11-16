@@ -1,0 +1,283 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700&family=Montserrat:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap">
+<style>
+:root{--pu:#8b3cf0;--pu2:#b06bff;--app:#2c2c30;--cell:#3b3b40;--green:#2f8f5b;--green2:#3fa56b;--lime:#b8ff9a;--pink:#c2244f;--pink2:#e0386a}
+*{box-sizing:border-box}
+html,body{margin:0;width:1080px;height:1080px;overflow:hidden;background:#0b0811;font-family:Montserrat,sans-serif;color:#fff}
+#bg{position:absolute;inset:0;overflow:hidden}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:90px 90px;-webkit-mask:radial-gradient(70% 60% at 50% 40%,#000,transparent)}
+.glow{position:absolute;left:50%;bottom:-430px;width:1500px;height:760px;translate:-50% 0;border-radius:50%;background:radial-gradient(closest-side,rgba(139,60,240,.6),rgba(139,60,240,.18) 45%,transparent 75%)}
+.arc{position:absolute;left:50%;bottom:-990px;width:1900px;height:1300px;translate:-50% 0;border-radius:50%;border-top:2px solid rgba(176,107,255,.75);box-shadow:0 -10px 60px rgba(139,60,240,.45)}
+.pix{position:absolute;width:44px;height:44px;background:rgba(139,60,240,.16)}
+.cn{position:absolute;width:26px;height:26px;border:0 solid var(--pu2);z-index:50}
+.c1{left:40px;top:40px;border-left-width:2px;border-top-width:2px}.c2{right:40px;top:40px;border-right-width:2px;border-top-width:2px}
+.c3{left:40px;bottom:40px;border-left-width:2px;border-bottom-width:2px}.c4{right:40px;bottom:40px;border-right-width:2px;border-bottom-width:2px}
+
+/* logo */
+.logo{display:flex;align-items:center;gap:18px;font:600 64px Saira;letter-spacing:-.01em}
+.mark{display:grid;grid-template-columns:repeat(3,1fr);width:78px;height:78px;gap:0}
+.mark i{background:#fff}.mark i.o{background:transparent}
+#intro{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;z-index:20}
+#intro p{margin:0;font:400 34px Geist,sans-serif;color:rgba(255,255,255,.72)}
+#intro p b{color:var(--pu2);font-weight:500}
+
+/* camera + stage */
+#cam{position:absolute;left:0;top:0;width:1080px;height:1080px;z-index:10}
+#stage{position:absolute;left:0;top:0;width:916px;height:872px;transform-origin:0 0}
+.phone{position:absolute;top:0;width:418px;height:872px;border-radius:64px;padding:14px;background:#1b1b1d;
+  box-shadow:inset 0 0 0 2px #3a3a3e,inset 0 0 0 5px #0c0c0d,0 40px 80px -30px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.05)}
+#pa{left:0}#pb{left:498px}
+.screen{position:relative;width:390px;height:844px;border-radius:50px;overflow:hidden;background:var(--app)}
+.island{position:absolute;left:50%;top:11px;width:118px;height:34px;translate:-50% 0;border-radius:20px;background:#000;z-index:30}
+.sb{display:flex;justify-content:space-between;align-items:center;padding:18px 30px 0 34px;font:600 15px Montserrat;height:50px}
+.sb i{display:inline-block;width:62px;height:12px;background:linear-gradient(90deg,#fff 0 30%,transparent 30% 38%,#fff 38% 62%,transparent 62% 70%,#fff 70%);border-radius:3px;opacity:.9}
+.hd{padding:16px 20px 0}.hd h1{margin:0;font:600 26px Saira;display:flex;align-items:center;gap:10px}
+.hd p{margin:4px 0 0;font:400 11.5px/1.45 Montserrat;color:rgba(255,255,255,.6)}
+.search{margin:14px 20px 0;height:44px;border-radius:4px;background:var(--cell);display:flex;align-items:center;padding:0 14px;font:400 13px Montserrat;color:rgba(255,255,255,.7);border-bottom:1px solid rgba(255,255,255,.3)}
+.list{margin:12px 20px 0;display:grid;gap:8px}
+.list div{height:46px;border-radius:4px;background:var(--cell);display:flex;align-items:center;justify-content:space-between;padding:0 14px;font:500 13px Montserrat}
+.sec{margin:16px 20px 8px;font:600 12px Montserrat;color:rgba(255,255,255,.85)}
+.req{margin:0 20px 10px;border-radius:4px;background:var(--green);padding:10px;overflow:hidden}
+.req .who{display:flex;gap:10px;align-items:center}
+.cad{width:40px;height:40px;background:#fff;border-radius:3px;display:grid;place-items:center;color:#222;font:700 20px Saira;flex:none}
+.req b{display:block;font:600 15px Saira;color:#bfffd0}.req small{font:400 11px Montserrat;color:rgba(255,255,255,.75)}
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.yn div{height:36px;display:flex;align-items:center;justify-content:center;font:600 12px Montserrat;border-radius:2px}
+.no{background:#f19a9a;color:#b3262a}.yes{background:var(--lime);color:#1d7a3a}
+.acc{overflow:hidden;margin:0 20px 10px;border-radius:4px;background:#24533d;padding:10px;display:flex;gap:10px;align-items:center;border-left:3px solid var(--lime)}
+.acc b{display:block;font:600 14px Saira;color:#bfffd0}.acc small{font:400 10.5px Montserrat;color:rgba(255,255,255,.7)}
+.nav{position:absolute;left:0;right:0;bottom:0;height:84px;display:flex;justify-content:space-around;padding-top:14px;background:#262629;border-top:1px solid rgba(255,255,255,.08);z-index:5}
+.nav div{display:flex;flex-direction:column;align-items:center;gap:6px;font:500 10px Montserrat;color:rgba(255,255,255,.5)}
+.nav svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav .on{color:#fff}
+/* marketplace */
+.wallet{display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:rgba(139,60,240,.25);border:1px solid rgba(176,107,255,.6);font:600 13px Montserrat}
+.wallet i{width:10px;height:10px;background:var(--pu2);transform:rotate(45deg)}
+.mk{margin:14px 20px 0;border-radius:6px;background:linear-gradient(180deg,var(--pink2),var(--pink));padding:0 0 12px;overflow:hidden}
+.mk .t{display:flex;align-items:center;gap:10px;padding:12px 14px;font:600 20px Saira;background:rgba(0,0,0,.12)}
+.mk .t .mark{width:26px;height:26px}.mk .t .mark i{background:#ffd3e0}
+.study{margin:10px 12px 0;padding:12px;border-radius:4px;background:rgba(255,255,255,.1);display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:center}
+.study .lg{width:56px;height:56px;border-radius:50%;background:#fff;display:grid;place-items:center;color:var(--green);font:700 22px Saira}
+.study h4{margin:0;font:600 15px/1.15 Montserrat}
+.pp{display:flex;justify-content:space-between;margin-top:8px;font:500 10px Montserrat;color:rgba(255,255,255,.85)}
+.pbar{height:9px;background:#111;margin-top:4px}.pbar b{display:block;height:100%;background:#2fe86a}
+.cl{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font:600 10px Montserrat}
+.cl span{flex:1;background:#2e8b57;color:#9cffb9;text-align:center;padding:4px}.cl em{font-style:normal;margin-left:6px;background:#1d5a37;color:#9cffb9;padding:4px 8px}
+.ai{margin:14px 20px 0;border-radius:6px;background:linear-gradient(135deg,#5b2bb5,#8b3cf0);padding:14px;font:500 12.5px/1.45 Montserrat}
+.ai b{display:block;font:600 16px Saira;margin-bottom:4px}
+/* sheet */
+.dim{position:absolute;inset:0;background:rgba(0,0,0,.6);z-index:15;opacity:0}
+.sheet{position:absolute;left:0;right:0;bottom:0;height:600px;z-index:16;background:#242427;border-radius:26px 26px 0 0;padding:14px 20px 0;border-top:1px solid rgba(255,255,255,.1)}
+.grab{width:44px;height:5px;border-radius:3px;background:rgba(255,255,255,.25);margin:0 auto 14px}
+.sheet h3{margin:0;font:600 22px Saira}.sheet .sub{margin:2px 0 0;font:400 12px Montserrat;color:rgba(255,255,255,.55)}
+.share{margin-top:16px;font:600 12px Montserrat;color:rgba(255,255,255,.85)}
+.tg{display:flex;justify-content:space-between;align-items:center;height:52px;padding:0 14px;margin-top:8px;border-radius:6px;background:var(--cell);font:500 14px Montserrat}
+.sw{width:46px;height:28px;border-radius:14px;background:#55555c;position:relative}
+.sw b{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff}
+.what{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font:600 12px Montserrat;color:var(--pu2)}
+.what i{width:16px;height:16px;border-radius:50%;border:1.5px solid currentColor;font:700 10px/13px Montserrat;text-align:center;font-style:normal}
+.tip{margin-top:8px;padding:0 14px;border-radius:8px;background:rgba(139,60,240,.14);border:1px solid rgba(176,107,255,.35);font:400 12px/1.5 Montserrat;color:rgba(255,255,255,.88);overflow:hidden;height:0}
+.tip p{margin:12px 0}
+.cta{position:absolute;left:20px;right:20px;bottom:34px;height:56px;border-radius:6px;background:var(--pu);display:flex;align-items:center;justify-content:center;font:600 16px Montserrat}
+.toast{position:absolute;left:16px;right:16px;top:58px;z-index:25;padding:14px 16px;border-radius:14px;background:rgba(40,40,44,.95);border:1px solid rgba(255,255,255,.12);display:flex;gap:12px;align-items:center;box-shadow:0 20px 40px -10px rgba(0,0,0,.8);opacity:0}
+.toast i{width:30px;height:30px;border-radius:50%;background:var(--lime);display:grid;place-items:center;color:#1d4a2a;font:700 16px Montserrat;font-style:normal;flex:none}
+.toast b{display:block;font:600 14px Montserrat}.toast small{font:400 11px Montserrat;color:rgba(255,255,255,.6)}
+
+.cursor{position:absolute;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;z-index:40;border:3px solid #fff;background:rgba(139,60,240,.45);box-shadow:0 0 0 2px rgba(0,0,0,.25),0 6px 16px rgba(0,0,0,.5)}
+.ripple{position:absolute;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;border:3px solid var(--pu2);z-index:39;opacity:0}
+.pill{position:absolute;z-index:41;white-space:nowrap;padding:9px 14px;border-radius:999px;background:var(--pu);color:#fff;font:600 14px Montserrat;box-shadow:0 10px 30px -6px rgba(139,60,240,.8)}
+#cap{position:absolute;left:0;right:0;bottom:0;height:230px;z-index:30;background:linear-gradient(transparent,rgba(11,8,17,.94) 55%)}
+#cap p{position:absolute;left:80px;right:80px;bottom:60px;margin:0;text-align:center;font:500 33px/1.25 Geist,sans-serif;letter-spacing:-.01em}
+#tag{position:absolute;left:70px;top:78px;z-index:30;display:flex;align-items:center;gap:10px;padding:12px 20px 12px 16px;border-radius:999px;background:rgba(24,20,30,.9);border:1px solid rgba(176,107,255,.5);font:500 23px Geist}
+#tag i{width:11px;height:11px;background:var(--pu2);box-shadow:0 0 10px var(--pu2)}
+#marq{position:absolute;left:0;top:50%;translate:0 -50%;z-index:30;white-space:nowrap;font:500 74px Geist;letter-spacing:-.03em}
+#marq b{color:var(--pu2);font-weight:500}
+</style></head>
+<body>
+<div id="bg"><div class="grid"></div><div class="glow"></div><div class="arc"></div>
+  <i class="pix" style="left:120px;top:250px"></i><i class="pix" style="left:164px;top:294px"></i><i class="pix" style="right:140px;top:200px"></i><i class="pix" style="right:96px;top:244px;opacity:.6"></i></div>
+<i class="cn c1"></i><i class="cn c2"></i><i class="cn c3"></i><i class="cn c4"></i>
+
+<div id="intro">
+  <div class="logo"><span class="mark"><i class="o"></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i class="o"></i></span>DEcent Healthcare</div>
+  <p>Own <b>·</b> Share <b>·</b> Earn</p>
+</div>
+
+<div id="cam"><div id="stage">
+  <!-- Phone A: Data panel (consent) -->
+  <div class="phone" id="pa"><div class="screen">
+    <div class="island"></div>
+    <div class="sb"><span>09:46</span><i></i></div>
+    <div class="hd"><h1>← DEcent Healthcare EHR</h1><p>Here you can find your medical record collection. All data is protected by you.</p></div>
+    <div class="search">Search medical EMR</div>
+    <div class="list"><div>All medical documents <span>→</span></div><div>Allergies <span>→</span></div><div>Medication <span>→</span></div></div>
+    <div class="sec">Current access</div>
+    <div class="acc"><div class="cad">⚕</div><div><b>ABC Hospital</b><small>Dr. George · access valid till 11/04/2025</small></div></div>
+    <div class="acc" id="acc2" style="height:0;padding-top:0;padding-bottom:0;margin-bottom:0;opacity:0"><div class="cad">⚕</div><div><b>DEF Hospital</b><small>Dr. George · access valid for 30 days</small></div></div>
+    <div class="sec">Request pending</div>
+    <div class="req" id="req1"><div class="who"><div class="cad">⚕</div><div><b>DEF Hospital</b><small>Dr. George · ID jkf3448932e</small></div></div>
+      <div class="yn"><div class="no">Deny</div><div class="yes" id="approve">Approve</div></div></div>
+    <div class="req"><div class="who"><div class="cad">⚕</div><div><b>GJI Hospital</b><small>Dr. George · ID jkf3448932e</small></div></div>
+      <div class="yn"><div class="no">Deny</div><div class="yes">Approve</div></div></div>
+    <div class="nav"><div data-i="home">Home</div><div data-i="market">Marketplace</div><div class="on" data-i="panel">Data Panel</div><div data-i="ai">AI Assistant</div></div>
+    <div class="toast" id="toastA"><i>✓</i><div><b>Access granted to DEF Hospital</b><small>Valid for 30 days · logged on-chain</small></div></div>
+  </div></div>
+
+  <!-- Phone B: Research marketplace -->
+  <div class="phone" id="pb"><div class="screen">
+    <div class="island"></div>
+    <div class="sb"><span>09:46</span><i></i></div>
+    <div class="hd" style="display:flex;justify-content:space-between;align-items:center"><h1>Marketplace</h1><div class="wallet" id="wallet"><i></i><span id="wal">$12.30</span></div></div>
+    <div class="mk">
+      <div class="t"><span class="mark"><i class="o"></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i class="o"></i></span>Research pools</div>
+      <div class="study" id="study1"><div class="lg">♥</div><div><h4>Cardiovascular Lifestyle Study</h4>
+        <div class="pp"><span>Participants</span><span id="pcount">440/500</span></div><div class="pbar"><b id="pbar" style="width:88%"></b></div>
+        <div class="cl"><span>Closes in 10 days</span><em>◆ $2.05</em></div></div></div>
+      <div class="study"><div class="lg">✿</div><div><h4>Maternal Health Study</h4>
+        <div class="pp"><span>Participants</span><span>440/500</span></div><div class="pbar"><b style="width:88%"></b></div>
+        <div class="cl"><span>Closes in 10 days</span><em>◆ $2.05</em></div></div></div>
+    </div>
+    <div class="ai"><b>AI insight</b>Your resting heart rate is 6% lower than last month. Keep up the evening walks.</div>
+    <div class="nav"><div data-i="home">Home</div><div class="on" data-i="market">Marketplace</div><div data-i="panel">Data Panel</div><div data-i="ai">AI Assistant</div></div>
+
+    <div class="dim" id="dim"></div>
+    <div class="sheet" id="sheet">
+      <div class="grab"></div>
+      <h3>Cardiovascular Lifestyle Study</h3><p class="sub">University research team · 60 places left · ◆ $2.05 reward</p>
+      <div class="share">Choose what to share</div>
+      <div class="tg">Heart rate &amp; activity<span class="sw" id="sw1"><b></b></span></div>
+      <div class="tg" id="tg2">Lab results<span class="sw" id="sw2"><b></b></span></div>
+      <div class="tg">Medication history<span class="sw"><b></b></span></div>
+      <div class="what" id="what"><i>?</i>What does anonymised mean?</div>
+      <div class="tip" id="tip"><p>Your name, ID and contact details are removed before sharing. Researchers see the data, never who you are.</p></div>
+      <div class="cta" id="cta">Contribute data · earn $2.05</div>
+    </div>
+    <div class="toast" id="toastB"><i>✓</i><div><b>+$2.05 earned</b><small>Data shared anonymously · logged on-chain</small></div></div>
+  </div></div>
+
+  <div class="ripple" id="rip"></div>
+  <div class="cursor" id="cur"></div>
+  <div class="pill" id="pill">+ $2.05</div>
+</div></div>
+
+<div id="tag"><i></i><span id="tagt"></span></div>
+<div id="cap"><p id="capt"></p></div>
+<div id="marq">Own your data <b>·</b> Share it ethically <b>·</b> Earn from research <b>·</b> Own your data</div>
+
+<script>
+const ICONS = {
+  home: '<svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"/></svg>',
+  market: '<svg viewBox="0 0 24 24"><path d="M4 20h16"/><rect x="5" y="11" width="3" height="6" rx="1"/><rect x="10.5" y="7" width="3" height="10" rx="1"/><rect x="16" y="4" width="3" height="13" rx="1"/></svg>',
+  panel: '<svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="10" rx="1.5"/><rect x="13" y="4" width="7" height="6" rx="1.5"/><rect x="13" y="12" width="7" height="8" rx="1.5"/><rect x="4" y="16" width="7" height="4" rx="1.5"/></svg>',
+  ai: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M9 12h.01M15 12h.01M9.5 15.5c1.4 1 3.6 1 5 0"/></svg>',
+};
+document.querySelectorAll('.nav div').forEach((d) => d.insertAdjacentHTML('afterbegin', ICONS[d.dataset.i]));
+
+const $ = (id) => document.getElementById(id);
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const io = (k) => (k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
+const out = (k) => 1 - Math.pow(1 - k, 3);
+const lerp = (a, b, k) => a + (b - a) * k;
+const money = (v) => '$' + v.toFixed(2);
+function pos(el, fx = .5, fy = .5) {
+  let x = 0, y = 0, n = el;
+  while (n && n.id !== 'stage') { x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent; }
+  return [x + el.offsetWidth * fx, y + el.offsetHeight * fy];
+}
+let P;
+function measure() {
+  P = { approve: pos($('approve')), study: pos($('study1'), .45, .5), what: pos($('what'), .3, .5), sw2: pos($('sw2')),
+        cta: pos($('cta')), wallet: pos($('wallet')), toastB: pos($('toastB')), start: [300, 760] };
+}
+const WIDE = [458, 436, .98];
+const CAM = [[0, ...WIDE], [2.6, ...WIDE], [3.6, 209, 560, 1.36], [6.2, 209, 560, 1.36], [7.2, 707, 420, 1.36],
+             [8.1, 707, 420, 1.36], [8.7, 707, 560, 1.15], [10.9, 707, 560, 1.15], [11.6, 707, 340, 1.36],
+             [12.85, 707, 340, 1.36], [13.6, ...WIDE], [16, ...WIDE]];
+function camAt(t) {
+  for (let i = 0; i < CAM.length - 1; i++) {
+    const [t0, ...a] = CAM[i], [t1, ...b] = CAM[i + 1];
+    if (t <= t1) { const k = io(seg(t, t0, t1)); return a.map((v, j) => lerp(v, b[j], k)); }
+  }
+  return CAM[CAM.length - 1].slice(1);
+}
+function cursorAt(t) {
+  const K = [[3.9, P.start], [4.6, P.approve], [5.4, P.approve], [7.2, P.study], [7.9, P.study], [8.8, P.what], [9.3, P.what],
+             [9.7, P.sw2], [10.1, P.sw2], [10.45, P.cta], [10.9, P.cta], [11.4, [P.cta[0] + 120, P.cta[1] + 80]]];
+  if (t <= K[0][0]) return K[0][1];
+  for (let i = 0; i < K.length - 1; i++) {
+    const [t0, a] = K[i], [t1, b] = K[i + 1];
+    if (t <= t1) { const k = io(seg(t, t0, t1)); return [lerp(a[0], b[0], k), lerp(a[1], b[1], k)]; }
+  }
+  return K[K.length - 1][1];
+}
+const TAPS = [4.95, 7.6, 9.0, 9.85, 10.6];
+const CAPS = [
+  [3.1, 6.1, 'Patients approve every request, so records are shared only with consent'],
+  [6.6, 8.6, 'Researchers post studies, and patients choose which ones to join'],
+  [8.9, 10.9, 'Share only what you choose, anonymised and explained in place'],
+  [11.3, 12.8, 'Every contribution is logged on-chain and rewarded with tokens'],
+];
+const TAGS = [[3.5, 6.0, 'Consent in one tap'], [6.8, 8.5, 'Research marketplace'], [9.1, 10.8, 'Patient-controlled sharing'], [11.4, 12.7, 'Tokens for research']];
+function textAt(list, t) {
+  for (const [a, b, s] of list) if (t >= a - .35 && t <= b + .35) return [s, Math.min(seg(t, a - .35, a), 1 - seg(t, b, b + .35))];
+  return ['', 0];
+}
+function render(t) {
+  if (!P) measure();
+  const li = t < 8 ? 1 - io(seg(t, 2.0, 2.7)) : io(seg(t, 14.9, 15.7));
+  $('intro').style.opacity = li; $('intro').style.transform = `scale(${1 + (1 - li) * .06})`;
+  const sIn = io(seg(t, 2.2, 3.0)), sOut = io(seg(t, 14.4, 15.2)), dimEnd = io(seg(t, 13.3, 13.9));
+  $('cam').style.opacity = sIn * (1 - sOut) * (1 - dimEnd * .72);
+  const [cx, cy, s0] = camAt(t), s = s0 * (0.94 + 0.06 * sIn);
+  $('stage').style.transform = `translate(${540 - cx * s}px, ${500 - cy * s}px) scale(${s})`;
+
+  // Phone A: approve -> request collapses, access list gains DEF Hospital
+  const ap = t >= 4.95 && t < 5.12;
+  $('approve').style.transform = `scale(${ap ? .94 : 1})`;
+  $('approve').textContent = t >= 5.1 ? 'Approved ✓' : 'Approve';
+  const col = io(seg(t, 5.7, 6.2));
+  Object.assign($('req1').style, { maxHeight: (1 - col) * 140 + 'px', opacity: 1 - col, paddingTop: (1 - col) * 10 + 'px', paddingBottom: (1 - col) * 10 + 'px', marginBottom: (1 - col) * 10 + 'px' });
+  const ad = io(seg(t, 5.7, 6.2));
+  Object.assign($('acc2').style, { height: ad * 60 + 'px', opacity: ad, paddingTop: ad * 10 + 'px', paddingBottom: ad * 10 + 'px', marginBottom: ad * 10 + 'px' });
+  const ta = io(seg(t, 5.2, 5.5)) * (1 - io(seg(t, 6.6, 7.0)));
+  Object.assign($('toastA').style, { opacity: ta, transform: `translateY(${(1 - ta) * -120}px)` });
+
+  // Phone B: sheet, explainer, toggle, contribute
+  const sh = io(seg(t, 7.75, 8.3)) * (1 - io(seg(t, 10.9, 11.3)));
+  $('sheet').style.transform = `translateY(${(1 - sh) * 640}px)`; $('dim').style.opacity = sh;
+  const tipK = io(seg(t, 9.15, 9.55)); $('tip').style.height = tipK * 70 + 'px'; $('tip').style.opacity = tipK;
+  const on1 = 1, on2 = io(seg(t, 9.9, 10.1));
+  [[1, on1], [2, on2]].forEach(([i, k]) => { const sw = $('sw' + i); sw.style.background = `color-mix(in srgb, #8b3cf0 ${k * 100}%, #55555c)`; sw.firstElementChild.style.transform = `translateX(${k * 18}px)`; });
+  const cp = t >= 10.6 && t < 10.78; $('cta').style.transform = `scale(${cp ? .97 : 1})`;
+  const tb = io(seg(t, 10.75, 11.05)) * (1 - io(seg(t, 11.45, 11.75)));
+  Object.assign($('toastB').style, { opacity: tb, transform: `translateY(${(1 - tb) * -120}px)` });
+  const pc = t >= 11.0 ? 441 : 440; $('pcount').textContent = `${pc}/500`; $('pbar').style.width = (pc / 5) + '%';
+  const w = out(seg(t, 12.15, 12.7)); $('wal').textContent = money(lerp(12.30, 14.35, w));
+  $('wallet').style.boxShadow = `0 0 ${Math.sin(Math.PI * seg(t, 12.1, 12.8)) * 22}px rgba(176,107,255,.9)`;
+
+  // cursor
+  const [x, y] = cursorAt(t);
+  const cv = seg(t, 3.7, 4.0) * (1 - seg(t, 11.1, 11.4));
+  const tapped = TAPS.find((a) => t >= a && t < a + .5), press = TAPS.some((a) => t >= a && t < a + .14);
+  Object.assign($('cur').style, { left: x + 'px', top: y + 'px', opacity: cv, transform: `scale(${press ? .78 : 1})` });
+  if (tapped !== undefined) { const k = seg(t, tapped, tapped + .5); Object.assign($('rip').style, { left: x + 'px', top: y + 'px', opacity: (1 - k) * cv, transform: `scale(${1 + k * 1.6})` }); }
+  else $('rip').style.opacity = 0;
+
+  // reward pill flies from the toast to the wallet
+  const pk = io(seg(t, 11.5, 12.2)), pv = seg(t, 11.4, 11.55) * (1 - seg(t, 12.15, 12.3));
+  const px = lerp(P.toastB[0], P.wallet[0], pk), py = lerp(P.toastB[1] + 30, P.wallet[1], pk) - Math.sin(Math.PI * pk) * 60;
+  const pel = $('pill'); Object.assign(pel.style, { left: (px - pel.offsetWidth / 2) + 'px', top: (py - pel.offsetHeight / 2) + 'px', opacity: pv, transform: `scale(${1 - pk * .2})` });
+
+  const [c, ca] = textAt(CAPS, t); if (c) $('capt').textContent = c;
+  $('capt').style.opacity = ca; $('capt').style.transform = `translateY(${(1 - ca) * 12}px)`;
+  const [g, ga] = textAt(TAGS, t); if (g) $('tagt').textContent = g;
+  $('tag').style.opacity = ga; $('tag').style.transform = `translateX(${(1 - ga) * -16}px)`;
+  const mv = seg(t, 13.3, 13.7) * (1 - seg(t, 14.7, 15.1));
+  $('marq').style.opacity = mv; $('marq').style.transform = `translateX(${lerp(1080, -1500, seg(t, 13.1, 15.3))}px)`;
+}
+window.render = render;
+window.ready = document.fonts.ready.then(() => { measure(); render(0); return true; });
+</script>
+</body></html>
