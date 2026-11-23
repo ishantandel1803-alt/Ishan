@@ -1,0 +1,162 @@
+<!doctype html>
+<!--
+  LookAfter AI cover video for the Work card: 1080x1080, seamless 16 s loop.
+  Styled like the App Store screenshots: big headline, large soft phone that
+  bleeds off the bottom, and one magnified card popping out of the screen per step.
+    1 Home: your circle + key alert        2 Ask Myra: question, answer, source
+    3 Upload: report being analysed        4 Results: ApoB lifted from the analysis
+  Deterministic: window.render(t). Render: FILM=lookafter-cover.html node render-film.js …
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  @font-face { font-family: 'Bricolage Grotesque'; src: url('fonts/BricolageGrotesque-SemiBold.ttf'); font-weight: 600; }
+  @font-face { font-family: 'Bricolage Grotesque'; src: url('fonts/BricolageGrotesque-Bold.ttf'); font-weight: 700; }
+  html, body { margin: 0; width: 1080px; height: 1080px; overflow: hidden; }
+  #stage { position: relative; width: 1080px; height: 1080px; overflow: hidden; font-family: Manrope, sans-serif;
+           background: linear-gradient(180deg, #f6ecd9 0%, #f1e3c7 55%, #ecd9b6 100%); }
+  .abs { position: absolute; will-change: transform, opacity; }
+
+  #brand { left: 0; width: 1080px; top: 58px; display: flex; justify-content: center; align-items: center; gap: 12px;
+           font: 700 34px 'Bricolage Grotesque'; color: #d0764f; letter-spacing: -.01em; }
+  #brand img { width: 40px; height: 40px; }
+  .head { left: 0; width: 1080px; top: 120px; text-align: center; font: 700 70px/1.06 'Bricolage Grotesque'; color: #2e4a3e; letter-spacing: -.025em; }
+
+  /* Soft phone like the store shots: light bezel, no heavy black frame */
+  #phone { left: 220px; top: 330px; width: 640px; height: 1000px; border-radius: 78px; background: #fbf7ef; padding: 14px; box-sizing: border-box;
+           box-shadow: 0 0 0 1px rgba(46,74,62,.08), 0 40px 80px -30px rgba(80,60,30,.35); }
+  #screen { position: relative; width: 612px; height: 972px; border-radius: 66px; overflow: hidden; background: #f4efe6; }
+  .scr { position: absolute; left: 0; top: 0; width: 612px; height: auto; }
+  #fade { left: 0; top: 760px; width: 1080px; height: 320px; background: linear-gradient(180deg, rgba(236,217,182,0) 0%, #ecd9b6 75%); }
+
+  /* Pop-out cards */
+  .pop { left: 150px; width: 780px; box-sizing: border-box; padding: 36px 40px; border-radius: 34px; color: #1c2520;
+         background: rgba(252,250,246,.98); border: 1px solid rgba(255,255,255,.95);
+         box-shadow: 0 2px 0 rgba(255,255,255,.8) inset, 0 50px 90px -30px rgba(60,45,20,.45), 0 18px 36px -18px rgba(60,45,20,.3); }
+  .eyebrow { font: 600 20px Manrope; letter-spacing: .16em; text-transform: uppercase; color: #8a8478; }
+  .h3 { font: 600 42px 'Bricolage Grotesque'; letter-spacing: -.02em; margin-top: 6px; }
+  .btn { padding: 12px 22px; border-radius: 999px; background: #c8714f; color: #fff; font: 600 19px Manrope; letter-spacing: .04em; }
+  .av { display: flex; flex-direction: column; align-items: center; gap: 10px; font: 500 21px Manrope; color: #8a8478; }
+  .av b { width: 84px; height: 84px; border-radius: 50%; background: #2e4a3e; color: #f1ecdf; display: grid; place-items: center; font: 600 26px Manrope; }
+  .row { display: flex; align-items: center; justify-content: space-between; }
+  .chip { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; background: #f2ece2; font: 500 20px Manrope; color: #6b675e; }
+  .q { margin-left: auto; width: fit-content; max-width: 540px; padding: 20px 26px; border-radius: 28px 28px 8px 28px; background: #f6e6da; color: #3a2a22; font: 500 30px/1.4 Manrope; }
+  .a { margin-top: 20px; padding: 24px 28px; border-radius: 28px 28px 28px 8px; background: #ffffff; border: 1px solid #efe8dc; box-shadow: 0 10px 28px -18px rgba(60,45,20,.3); }
+  .tick { display: flex; align-items: center; gap: 16px; font: 500 28px Manrope; color: #2a302c; margin-top: 20px; }
+  .tick i { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 19px; color: #fff; background: #4caf7f; flex: none; }
+  .bar { position: relative; height: 16px; border-radius: 8px; background: linear-gradient(90deg, #4caf7f, #d6b04a 60%, #d9654f); }
+  .knob { position: absolute; top: -9px; width: 34px; height: 34px; margin-left: -17px; border-radius: 50%; background: #fff; border: 5px solid #1c2520; box-sizing: border-box; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="brand" class="abs"><img src="img/logo.png">LookAfterAI</div>
+  <div class="abs head" data-k="0">Look after<br>everyone you love.</div>
+  <div class="abs head" data-k="1">Ask anything.<br>Get a real answer.</div>
+  <div class="abs head" data-k="2">Upload a report.<br>Understand it instantly.</div>
+  <div class="abs head" data-k="3">Your body’s numbers,<br>finally explained.</div>
+
+  <div id="phone" class="abs"><div id="screen">
+    <img class="scr" data-k="0" src="img/dashboard.png">
+    <img class="scr" data-k="1" src="img/ai.png">
+    <img class="scr" data-k="2" src="img/fileReport.png">
+    <img class="scr" data-k="3" src="img/analysis.png">
+  </div></div>
+  <div id="fade" class="abs"></div>
+
+  <!-- 1: your circle -->
+  <div class="abs pop" data-k="0" style="top:560px">
+    <div class="row"><div><div class="eyebrow">Your circle</div><div class="h3">Four people.</div></div><div class="btn">FAMILY’S EHR →</div></div>
+    <div class="row" style="margin-top:26px;padding:0 10px">
+      <div class="av"><b>IT</b>You</div><div class="av"><b>ST</b>Sarah</div><div class="av"><b>RT</b>Rajesh</div><div class="av"><b>MT</b>Meera</div>
+      <div class="av"><b style="background:transparent;border:3px dashed #c9bfae;color:#8a8478;font-size:40px">+</b>Add</div>
+    </div>
+    <div class="row" style="margin-top:28px;padding-top:22px;border-top:2px solid #e6dccb">
+      <div style="font:500 25px Manrope;color:#2a302c;display:flex;align-items:center;gap:14px"><span style="width:16px;height:16px;border-radius:50%;background:#d9534f;display:inline-block"></span>Dad missed Lisinopril (2 days)</div>
+      <div style="font:500 21px Manrope;color:#8a8478">Today, 11:20</div>
+    </div>
+  </div>
+
+  <!-- 2: Ask Myra -->
+  <div class="abs pop" data-k="1" style="top:540px">
+    <div class="q" id="q">Did Mom take her medication today?</div>
+    <div class="a" id="ans">
+      <div style="display:flex;align-items:center;gap:10px;font:600 20px Manrope;color:#c8714f"><img src="img/sphere-terracotta.png" style="width:30px;height:30px">Myra</div>
+      <div style="font:500 30px/1.45 Manrope;color:#1c2520;margin-top:10px">Yes. Mom logged her 8am Lisinopril at 8:05.</div>
+      <div class="chip" style="margin-top:16px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Mom’s medication log</div>
+    </div>
+  </div>
+
+  <!-- 3: analysing -->
+  <div class="abs pop" data-k="2" style="top:560px">
+    <div class="row"><div><div class="eyebrow">Blood panel · May 2026</div><div class="h3">Analysing your health</div></div>
+      <div style="width:76px;height:76px;border-radius:50%;border:7px solid #ece2d1;border-top-color:#c8714f;box-sizing:border-box" id="spin"></div></div>
+    <div class="tick" data-i="0"><i>✓</i>Read 34 markers</div>
+    <div class="tick" data-i="1"><i>✓</i>Compared to optimal ranges</div>
+    <div class="tick" data-i="2"><i>✓</i>Wrote your plain-language summary</div>
+  </div>
+
+  <!-- 4: ApoB -->
+  <div class="abs pop" data-k="3" style="top:560px">
+    <div class="row"><div class="h3" style="margin:0">ApoB</div><div class="chip" style="background:#f6dcd5;color:#c0503a">Needs action</div></div>
+    <div style="font:600 74px 'Bricolage Grotesque';margin-top:4px">104 <span style="font:500 26px Manrope;color:#8a8478">mg/dL · optimal &lt; 90</span></div>
+    <div class="bar" style="margin:22px 0 30px"><div class="knob" id="knob" style="left:84%"></div></div>
+    <div style="display:flex;gap:16px;align-items:flex-start">
+      <img src="img/sphere-terracotta.png" style="width:40px;height:40px;margin-top:2px">
+      <div style="font:500 27px/1.45 Manrope;color:#2a302c">Trending up, with LDL above optimal. Worth a conversation with your clinician.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const $$ = (s) => [...document.querySelectorAll(s)];
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const io = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const out = (x) => 1 - Math.pow(1 - x, 3);
+const back = (x) => { const c = 1.3; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const p = (t, a, b, e = io) => e(clamp((t - a) / (b - a)));
+const lerp = (a, b, k) => a + (b - a) * k;
+const set = (el, o, tf = '') => { el.style.opacity = o; el.style.transform = tf; };
+
+const STEP = 4, N = 4, X = .55;   // seconds per step, steps, crossfade length
+// local time of step k, wrapped so the loop is seamless (step 0 also plays after step 3)
+const local = (t, k) => { let u = (t - k * STEP) % (STEP * N); if (u < 0) u += STEP * N; return u > STEP * N - X ? u - STEP * N : u; };
+// visibility: fades in over [-X,0], out over [STEP-X, STEP]
+const vis = (u) => p(u, -X, 0) * (1 - p(u, STEP - X, STEP));
+
+window.render = (t) => {
+  for (let k = 0; k < N; k++) {
+    const u = local(t, k), v = vis(u);
+    // headline: the old one leaves before the new one arrives, so they never overlap
+    const hv = p(u, -.26, .06) * (1 - p(u, STEP - .58, STEP - .3));
+    $$(`.head[data-k="${k}"]`).forEach((el) => set(el, hv, `translateY(${(1 - p(u, -.26, .3, out)) * 22 - p(u, STEP - .58, STEP - .3) * 12}px)`));
+    // screen: gentle drift upward while shown
+    $$(`.scr[data-k="${k}"]`).forEach((el) => set(el, v, `translateY(${lerp(10, -30, clamp(u / STEP))}px)`));
+    // pop-out card: lifts out of the screen after the screen settles, settles back before the next step
+    const pin = p(u, .35, .95, back), pout = p(u, STEP - .75, STEP - .3);
+    $$(`.pop[data-k="${k}"]`).forEach((el) => set(el, clamp(p(u, .35, .6) - pout),
+      `translateY(${(1 - pin) * 40 + pout * 20}px) scale(${lerp(.86, 1, pin) - pout * .04})`));
+    if (k === 1) {                         // question first, then the answer
+      set(document.getElementById('q'), p(u, .6, .9), `translateY(${(1 - p(u, .6, 1, out)) * 16}px)`);
+      const a = p(u, 1.5, 2.0, back);
+      set(document.getElementById('ans'), p(u, 1.5, 1.7), `scale(${lerp(.9, 1, a)})`);
+      document.getElementById('ans').style.transformOrigin = 'left top';
+    }
+    if (k === 2) {                         // ticks land one by one, spinner turns
+      $$('.tick').forEach((el) => { const i = +el.dataset.i; const a = p(u, 1.0 + i * .55, 1.35 + i * .55, back);
+        set(el, p(u, 1.0 + i * .55, 1.2 + i * .55), `translateX(${(1 - a) * -20}px)`); });
+      document.getElementById('spin').style.transform = `rotate(${u * 300}deg)`;
+    }
+    if (k === 3) document.getElementById('knob').style.left = lerp(30, 84, p(u, .8, 1.9, out)) + '%';
+  }
+};
+
+window.ready = Promise.all([document.fonts.ready, ...[...document.images].map((im) => im.decode().catch(() => {}))])
+  .then(() => { window.render(0); return true; });
+window.DURATION = STEP * N;
+window.SIZE = [1080, 1080];
+</script>
+</body>
+</html>

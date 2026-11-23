@@ -1,0 +1,181 @@
+<!doctype html>
+<!--
+  W'supMate cover video for the Work card: 1080x1080, seamless 16 s loop.
+  Same recipe as the LookAfter cover: big headline in the store-shot style, a soft phone
+  with the real app screen bleeding off the bottom, and one magnified card popping out per step.
+    1 Home: type what you feel like doing      2 Peek: someone wants the same thing → I'm in
+    3 Plan: Maya proposes a time and place → Accept      4 It's a plan
+  Deterministic: window.render(t). Render: node render-film.js <puppeteer-core> frames <dir> 30
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; width: 1080px; height: 1080px; overflow: hidden; }
+  #stage { position: relative; width: 1080px; height: 1080px; overflow: hidden; font-family: Inter, sans-serif; color: #1c3324;
+           background: linear-gradient(180deg, #fdf9e3 0%, #faf3cf 60%, #f6eab4 100%); }
+  .abs { position: absolute; will-change: transform, opacity; }
+
+  #brand { left: 0; width: 1080px; top: 56px; display: flex; justify-content: center; align-items: center; gap: 12px;
+           font: 400 34px 'DM Serif Display'; color: #284732; }
+  #brand img { width: 44px; height: 44px; border-radius: 11px; }
+  .head { left: 0; width: 1080px; top: 124px; text-align: center; font: 400 72px/1.08 'DM Serif Display'; letter-spacing: -.015em; color: #1c3324; }
+  .hl { background: #ffd66b; padding: 0 14px; border-radius: 6px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+
+  /* Soft phone like the store shots */
+  #phone { left: 220px; top: 330px; width: 640px; height: 1000px; border-radius: 78px; background: #ffffff; padding: 14px; box-sizing: border-box;
+           box-shadow: 0 0 0 1px rgba(28,51,36,.08), 0 40px 80px -30px rgba(80,70,20,.35); }
+  #screen { position: relative; width: 612px; height: 972px; border-radius: 66px; overflow: hidden; background: #f3f2ec; }
+  .scr { position: absolute; left: 0; top: 0; width: 612px; height: auto; }
+  #fade { left: 0; top: 780px; width: 1080px; height: 300px; background: linear-gradient(180deg, rgba(246,234,180,0) 0%, #f6eab4 78%); }
+
+  /* Pop-out cards */
+  .pop { left: 150px; width: 780px; box-sizing: border-box; padding: 34px 40px; border-radius: 34px;
+         background: rgba(255,255,252,.98); border: 1px solid #fff;
+         box-shadow: 0 2px 0 rgba(255,255,255,.8) inset, 0 50px 90px -30px rgba(70,60,20,.42), 0 18px 36px -18px rgba(70,60,20,.28); }
+  .serif { font-family: 'DM Serif Display'; font-weight: 400; letter-spacing: -.01em; }
+  .row { display: flex; align-items: center; justify-content: space-between; }
+  .chip { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; background: #f1f0e8; font: 500 21px Inter; color: #4d5a50; }
+  .btn { flex: 1; height: 76px; border-radius: 999px; display: flex; align-items: center; justify-content: center; gap: 10px; font: 600 25px Inter; }
+  .btn.ghost { background: #fff; border: 2px solid #e7e5da; color: #1c3324; }
+  .btn.solid { background: #284732; color: #fff; }
+  .av { border-radius: 50%; object-fit: cover; display: block; }
+
+  /* step 1: the composer */
+  .tag { font: 500 22px Inter; color: #1c3324; background: #fff; padding: 10px 18px 10px 14px; border-radius: 12px;
+         box-shadow: 0 10px 24px -12px rgba(70,60,20,.35); display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+  .tag i { width: 9px; height: 9px; border-radius: 50%; background: #f07a3a; display: inline-block; }
+  .input { display: flex; align-items: center; justify-content: space-between; height: 104px; padding: 0 16px 0 34px; border-radius: 999px; background: #fff;
+           border: 2px solid #ece9dc; font: 400 32px Inter; color: #1c3324; }
+  .send { width: 72px; height: 72px; border-radius: 50%; background: #284732; display: grid; place-items: center; }
+  .caret { display: inline-block; width: 3px; height: 36px; background: #284732; margin-left: 3px; vertical-align: -6px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="brand" class="abs"><img src="img/icon.png">W’supMate</div>
+  <div class="abs head" data-k="0">Say what you want to do.<br><span class="hl">We’ll find your people.</span></div>
+  <div class="abs head" data-k="1">View people.<br><span class="hl">Then plan with them.</span></div>
+  <div class="abs head" data-k="2"><span class="hl">Agree a time</span><br>and a place.</div>
+  <div class="abs head" data-k="3">Then just <span class="hl">go.</span></div>
+
+  <div id="phone" class="abs"><div id="screen">
+    <img class="scr" data-k="0" src="../../img/wsupmate/screens/home.jpg">
+    <img class="scr" data-k="1" src="../../img/wsupmate/screens/peek.jpg">
+    <img class="scr" data-k="2" src="../../img/wsupmate/screens/plan.jpg">
+    <img class="scr" data-k="3" src="../../img/wsupmate/screens/mate.jpg">
+  </div></div>
+  <div id="fade" class="abs"></div>
+
+  <!-- 1: say it in one line -->
+  <div class="abs" data-k="0" id="tags" style="left:0;top:0;width:1080px;height:1080px">
+    <div class="abs tag" data-i="0" style="left:90px;top:560px"><i></i>padel, need a fourth</div>
+    <div class="abs tag" data-i="1" style="left:730px;top:470px"><i></i>ramen this week?</div>
+    <div class="abs tag" data-i="2" style="left:760px;top:600px"><i></i>jazz on thursday</div>
+  </div>
+  <div class="abs pop" data-k="0" style="top:720px;padding:30px 34px">
+    <div style="font:500 21px Inter;color:#7b8479;margin:0 0 16px 8px">What do you feel like doing?</div>
+    <div class="input"><span><span id="typed"></span><span class="caret" id="caret"></span></span>
+      <div class="send" id="send"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg></div>
+    </div>
+  </div>
+
+  <!-- 2: peek -->
+  <div class="abs pop" data-k="1" style="top:500px">
+    <div class="row" style="justify-content:flex-start;gap:22px">
+      <img class="av" src="img/maya.png" style="width:96px;height:96px">
+      <div><div style="font:600 32px Inter;display:flex;align-items:center;gap:10px">Maya, 28
+        <svg width="26" height="26" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#284732"/><polyline points="7 12.5 10.5 16 17 9" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div style="font:400 22px Inter;color:#7b8479;margin-top:4px">wants the same thing as you</div></div>
+    </div>
+    <div class="serif" style="font-size:44px;line-height:1.15;margin:24px 0 18px">“Sunset run by the canal. Who wants to join?”</div>
+    <div style="display:flex;gap:12px"><span class="chip">◷ tonight</span><span class="chip">⌖ 1.2 km · Angel</span></div>
+    <div style="display:flex;gap:16px;margin-top:28px">
+      <div class="btn ghost">✕&nbsp; Not for me</div>
+      <div class="btn solid" id="imin">✦&nbsp; I’m in</div>
+    </div>
+  </div>
+
+  <!-- 3: plan -->
+  <div class="abs pop" data-k="2" style="top:540px;text-align:center">
+    <div style="display:inline-flex;align-items:center;gap:8px;font:600 20px Inter;color:#c4632c;background:#fff1e4;padding:8px 16px;border-radius:999px"><span style="width:9px;height:9px;border-radius:50%;background:#f07a3a"></span>Just lit up</div>
+    <div class="serif" style="font-size:56px;margin:14px 0 18px">Maya just proposed</div>
+    <div style="display:flex;gap:12px;justify-content:center"><span class="chip">◷ Tonight, 7pm</span><span class="chip">⌖ Regent’s Canal, Angel</span></div>
+    <div style="display:flex;gap:16px;margin-top:28px">
+      <div class="btn ghost">Pass</div>
+      <div class="btn solid" id="accept"><span id="acc-t">✓&nbsp; Accept</span></div>
+    </div>
+  </div>
+
+  <!-- 4: it's a plan -->
+  <div class="abs pop" data-k="3" style="top:540px;text-align:center">
+    <div style="display:flex;justify-content:center">
+      <img class="av" id="av1" src="img/you.png" style="width:128px;height:128px;border:6px solid #ffd66b;box-sizing:border-box">
+      <img class="av" id="av2" src="img/maya.png" style="width:128px;height:128px;border:6px solid #c9b6f2;box-sizing:border-box;margin-left:-26px">
+    </div>
+    <div class="serif" style="font-size:76px;margin:14px 0 6px">It’s a plan</div>
+    <div style="font:400 25px Inter;color:#5d675f">You and Maya both said yes · Tonight, 7pm</div>
+    <div class="btn solid" style="margin-top:28px;flex:none">Open the chat</div>
+  </div>
+</div>
+
+<script>
+const $$ = (s) => [...document.querySelectorAll(s)];
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const io = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const out = (x) => 1 - Math.pow(1 - x, 3);
+const back = (x) => { const c = 1.3; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const p = (t, a, b, e = io) => e(clamp((t - a) / (b - a)));
+const lerp = (a, b, k) => a + (b - a) * k;
+const set = (el, o, tf = '') => { el.style.opacity = o; el.style.transform = tf; };
+const press = (u, a) => 1 - .06 * Math.sin(Math.PI * clamp((u - a) / .28));   // quick tap squish
+
+const STEP = 4, N = 4, X = .55;
+const local = (t, k) => { let u = (t - k * STEP) % (STEP * N); if (u < 0) u += STEP * N; return u > STEP * N - X ? u - STEP * N : u; };
+const vis = (u) => p(u, -X, 0) * (1 - p(u, STEP - X, STEP));
+const OFF = [-250, 0, 0, 0];   // per-step screen scroll, so the useful part sits above the card
+const TEXT = 'sunset run by the canal?';
+
+window.render = (t) => {
+  for (let k = 0; k < N; k++) {
+    const u = local(t, k), v = vis(u);
+    const hv = p(u, -.26, .06) * (1 - p(u, STEP - .58, STEP - .3));
+    $$(`.head[data-k="${k}"]`).forEach((el) => set(el, hv, `translateY(${(1 - p(u, -.26, .3, out)) * 22 - p(u, STEP - .58, STEP - .3) * 12}px)`));
+    $$(`.scr[data-k="${k}"]`).forEach((el) => set(el, v, `translateY(${OFF[k] + lerp(10, -30, clamp(u / STEP))}px)`));
+    const pin = p(u, .35, .95, back), pout = p(u, STEP - .75, STEP - .3);
+    $$(`.pop[data-k="${k}"]`).forEach((el) => set(el, clamp(p(u, .35, .6) - pout),
+      `translateY(${(1 - pin) * 40 + pout * 20}px) scale(${lerp(.86, 1, pin) - pout * .04})`));
+
+    if (k === 0) {
+      // other people's intents float up, then the user types theirs and sends it
+      $$('.tag').forEach((el) => { const i = +el.dataset.i, a = .2 + i * .25;
+        set(el, p(u, a, a + .3) * (1 - p(u, STEP - .7, STEP - .35)), `translateY(${(1 - p(u, a, a + .6, back)) * 30 + Math.sin((u + i) * 1.6) * 5}px)`); });
+      const n = Math.round(TEXT.length * p(u, .9, 2.6, (x) => x));
+      document.getElementById('typed').textContent = TEXT.slice(0, n);
+      document.getElementById('caret').style.opacity = (n < TEXT.length || Math.floor(u * 2.4) % 2 === 0) ? 1 : 0;
+      document.getElementById('send').style.transform = `scale(${press(u, 2.9) * (1 + .12 * p(u, 2.6, 2.85) * (1 - p(u, 2.85, 3.1)))})`;
+    }
+    if (k === 1) document.getElementById('imin').style.transform = `scale(${press(u, 2.5)})`;
+    if (k === 2) {
+      const acc = document.getElementById('accept'), a = p(u, 2.45, 2.7);
+      acc.style.transform = `scale(${press(u, 2.3)})`;
+      acc.style.background = a > .5 ? '#3f8a5a' : '#284732';
+      document.getElementById('acc-t').textContent = a > .5 ? '✓  Accepted' : '✓  Accept';
+    }
+    if (k === 3) {
+      // the two avatars slide together
+      const m = p(u, .5, 1.3, back);
+      document.getElementById('av1').style.transform = `translateX(${(1 - m) * -60}px)`;
+      document.getElementById('av2').style.transform = `translateX(${(1 - m) * 60}px)`;
+    }
+  }
+};
+
+window.ready = Promise.all([document.fonts.ready, ...[...document.images].map((im) => im.decode().catch(() => {}))])
+  .then(() => { window.render(0); return true; });
+window.DURATION = STEP * N;
+window.SIZE = [1080, 1080];
+</script>
+</body>
+</html>

@@ -12,6 +12,7 @@ const CASE = {
       title: 'Turning Zoth into a *tokenised asset marketplace*',
       intro: 'Zoth.io is an RWA investment platform backed by SOSV. I helped it grow from fractional real-estate listings into a marketplace where anyone can invest, stake and earn from tokenised real-world assets.',
       meta: [
+        { label: 'Company',  value: 'Zoth.io', href: 'https://zoth.io' },
         { label: 'Role',     value: 'Product Designer' },
         { label: 'Team',     value: 'Lead designer, PM, 10 eng & QA' },
         { label: 'Timeline', value: '4 months to go-live' },
@@ -45,6 +46,21 @@ const CASE = {
         ] },
       ],
       callout: { label: 'The challenge in one sentence', text: "Zoth's retail-facing real-estate tokenisation model struggled to scale due to limited liquidity and niche investors." } },
+
+    { type: 'decisions',
+      eyebrow: 'Decisions → impact',
+      title: 'Three calls I made, and *what they changed*',
+      items: [
+        { decision: 'Drop the education gate. Put users straight into the marketplace, with explainers inline.',
+          why: 'Retail investors spent 10–15 minutes trying to understand what they were buying, and dropped off when made to learn first.',
+          num: '−43%', impact: 'friction in the core investment flow, measured in usability testing' },
+        { decision: 'Show live APR, liquidity and availability on every asset card, always in plain language.',
+          why: 'Users trusted real numbers more than copy, and hesitation before the first investment was the biggest drop-off.',
+          num: '10K+', impact: 'members joined through the Index Fund after the redesign' },
+        { decision: 'Build one design system for both the retail app and the institutional dashboard.',
+          why: 'Retail and institutional investors needed the same clarity and compliance visibility, just at different depth.',
+          num: '4 mo', impact: 'from kickoff to go-live, and the base for Zoth’s pivot to RWA infrastructure' },
+      ] },
 
     { type: 'cards', cols: 2,
       eyebrow: 'Context',

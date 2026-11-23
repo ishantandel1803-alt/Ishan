@@ -1,5 +1,6 @@
 # Private notes (kept local only)
 content/
+jobs/
 
 # Old portfolio source & raw recordings
 Ishan-s-Portfolio-V2-main 3/
@@ -9,3 +10,6 @@ Ishan-s-Portfolio-V2-main 3/
 .DS_Store
 node_modules/
 motion/**/frames/
+
+# private call notes (copy kept in content/mentorship/)
+Mentorship*.pdf

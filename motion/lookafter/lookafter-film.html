@@ -1,0 +1,246 @@
+<!doctype html>
+<!--
+  LookAfter AI product film, 1920x1080, ~26.5 s.
+  Deterministic: window.render(t) draws the frame at time t (seconds).
+  Render: node ../zoth/cap.js-style capture (see render-film.js), then ffmpeg.
+  Key content stays inside the central 1080 px so the same file crops to a square card.
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  @font-face { font-family: 'Bricolage Grotesque'; src: url('fonts/BricolageGrotesque-SemiBold.ttf'); font-weight: 600; }
+  @font-face { font-family: 'Bricolage Grotesque'; src: url('fonts/BricolageGrotesque-Bold.ttf'); font-weight: 700; }
+  :root { --green: #2e4a3e; --deep: #1c2b25; --cream: #f3ead9; --ink: #1c2520; --terra: #c8714f; --peach: #e8a882; }
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: var(--deep); }
+  #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: Manrope, sans-serif; }
+  .abs { position: absolute; will-change: transform, opacity; }
+  .bg { inset: 0; }
+  #bgDark { background: radial-gradient(1200px 800px at 50% 45%, #33554a 0%, #1f3a30 55%, #15251f 100%); }
+  #bgCream { background: radial-gradient(1100px 760px at 50% 40%, #fbf5ea 0%, #f3ead9 60%, #ead9bf 100%); }
+  #dots { inset: 0; background-image: radial-gradient(circle, rgba(28,37,32,.10) 1.2px, transparent 1.2px); background-size: 22px 22px; }
+
+  .head { left: 0; width: 1920px; text-align: center; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; letter-spacing: -0.02em; }
+  .eyebrow { left: 0; width: 1920px; text-align: center; font: 700 22px Manrope; letter-spacing: .22em; text-transform: uppercase; color: var(--terra); }
+
+  .chip { display: flex; align-items: center; gap: 14px; padding: 16px 26px 16px 18px; border-radius: 999px;
+          background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); color: #e9efe9; font: 600 26px Manrope; white-space: nowrap;
+          box-shadow: 0 10px 30px -12px rgba(0,0,0,.5); }
+  .chip i { font-style: normal; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.1); font-size: 24px; }
+
+  .phone { width: 390px; height: 844px; border-radius: 58px; padding: 12px; background: #141b18;
+           box-shadow: 0 0 0 2px #2b3530, 0 50px 90px -30px rgba(28,37,32,.55), 0 20px 40px -20px rgba(28,37,32,.4); }
+  .screen { position: relative; width: 100%; height: 100%; border-radius: 47px; overflow: hidden; background: #f4efe6; }
+  .screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+  .pill { display: flex; align-items: center; gap: 12px; padding: 14px 22px; border-radius: 999px; background: #fffaf1;
+          color: var(--ink); font: 600 24px Manrope; white-space: nowrap; box-shadow: 0 1px 0 rgba(255,255,255,.8) inset, 0 18px 40px -16px rgba(28,37,32,.35); }
+  .pill b { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: #fff; font: 700 17px Manrope; }
+  .card { border-radius: 26px; background: #fffaf1; color: var(--ink); box-shadow: 0 24px 60px -22px rgba(28,37,32,.4); }
+  .doc { width: 230px; height: 300px; border-radius: 18px; background: #fff; padding: 26px 24px; box-sizing: border-box; box-shadow: 0 30px 60px -20px rgba(28,37,32,.45); }
+  .doc .l { height: 10px; border-radius: 5px; background: #e6dfd2; margin-top: 14px; }
+  .store { display: flex; align-items: center; gap: 14px; padding: 16px 30px 16px 24px; border-radius: 18px; background: #f1ecdf; color: var(--deep); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="bgDark" class="abs bg"></div>
+  <div id="bgCream" class="abs bg"><div id="dots" class="abs"></div></div>
+
+  <!-- S1: the problem -->
+  <div id="s1eyebrow" class="abs eyebrow" style="top:250px;color:var(--peach)">Family health today</div>
+  <div id="s1h1" class="abs head" style="top:305px;font-size:74px;color:#f1ecdf">Eight apps. Three doctors.</div>
+  <div id="s1h2" class="abs head" style="top:395px;font-size:74px;color:var(--peach)">One exhausted parent.</div>
+  <div id="chips"></div>
+
+  <!-- S2: the orb + logo -->
+  <img id="orb" class="abs" src="img/sphere-terracotta.png" style="left:810px;top:290px;width:300px;height:300px">
+  <div id="brand" class="abs" style="left:0;width:1920px;top:640px;display:flex;justify-content:center;align-items:center;gap:22px">
+    <img src="img/logo.png" style="width:78px;height:78px">
+    <span style="font:700 78px 'Bricolage Grotesque';color:#f1ecdf;letter-spacing:-.02em">LookAfter<span style="color:var(--peach)">AI</span></span>
+  </div>
+  <div id="tag" class="abs head" style="top:760px;font-size:40px;font-weight:600;color:#cfdad3;letter-spacing:0">Look after everyone you love.</div>
+
+  <!-- S3–S6: captions on cream -->
+  <div id="capEye" class="abs eyebrow" style="top:58px"></div>
+  <div id="capHead" class="abs head" style="top:96px;font-size:58px;color:var(--ink)"></div>
+
+  <!-- phones -->
+  <div id="phoneL" class="abs phone" style="left:520px;top:200px"><div class="screen"><img src="img/biomarkers.png"></div></div>
+  <div id="phoneR" class="abs phone" style="left:1010px;top:200px"><div class="screen"><img src="img/apob.png"></div></div>
+  <div id="phone" class="abs phone" style="left:765px;top:190px">
+    <div class="screen" id="screens">
+      <img data-s="dashboard" src="img/dashboard.png">
+      <img data-s="ai" src="img/ai.png">
+      <img data-s="analyzing" src="img/analyzing.png">
+      <img data-s="analysis" src="img/analysis.png">
+      <img data-s="familySharing" src="img/familySharing.png">
+    </div>
+  </div>
+
+  <!-- S3: family pills -->
+  <div id="pMom" class="abs pill" style="left:470px;top:330px"><b style="background:#2e4a3e">M</b>Mom</div>
+  <div id="pDad" class="abs pill" style="left:1240px;top:300px"><b style="background:#a95f42">D</b>Dad</div>
+  <div id="pGran" class="abs pill" style="left:440px;top:640px"><b style="background:#8c6a7e">G</b>Grandma</div>
+  <div id="pYou" class="abs pill" style="left:1250px;top:610px"><b style="background:#c9a25f">I</b>You</div>
+  <div id="alert" class="abs pill" style="left:1160px;top:820px;font-size:22px"><span style="width:12px;height:12px;border-radius:50%;background:#d9534f;display:inline-block"></span>Dad missed Lisinopril · 2 days</div>
+
+  <!-- S4: Ask Myra -->
+  <div id="ask" class="abs card" style="left:1185px;top:360px;width:330px;padding:22px 26px;border-bottom-right-radius:8px;background:#2e4a3e;color:#f1ecdf">
+    <div style="font:600 15px Manrope;letter-spacing:.14em;text-transform:uppercase;opacity:.7;margin-bottom:8px">You asked</div>
+    <div id="askText" style="font:600 27px/1.3 Manrope;min-height:70px"></div>
+  </div>
+  <div id="answer" class="abs card" style="left:405px;top:520px;width:340px;padding:24px 26px;border-bottom-left-radius:8px">
+    <div style="display:flex;align-items:center;gap:10px;font:700 16px Manrope;letter-spacing:.12em;text-transform:uppercase;color:var(--terra)"><img src="img/sphere-terracotta.png" style="width:26px;height:26px">Myra</div>
+    <div style="font:600 25px/1.35 Manrope;margin-top:10px">Yes. Mom logged her 8am Lisinopril.</div>
+    <div style="display:inline-flex;gap:8px;align-items:center;margin-top:14px;padding:8px 14px;border-radius:999px;background:#efe6d6;font:600 17px Manrope;color:#5c5a52">Source · Mom’s medication log</div>
+  </div>
+
+  <!-- S5: the report -->
+  <div id="doc" class="abs doc" style="left:1260px;top:330px">
+    <div style="font:700 15px Manrope;color:#c8714f;letter-spacing:.1em">PDF</div>
+    <div style="font:700 22px 'Bricolage Grotesque';color:#1c2520;margin-top:8px">Blood panel</div>
+    <div style="font:500 16px Manrope;color:#8a8478">May 2026 · 34 markers</div>
+    <div class="l" style="width:90%"></div><div class="l" style="width:70%"></div><div class="l" style="width:84%"></div><div class="l" style="width:60%"></div><div class="l" style="width:78%"></div>
+  </div>
+
+  <!-- S6: privacy badges -->
+  <div id="b1" class="abs pill" style="left:400px;top:360px">🔒 Only summaries are shared</div>
+  <div id="b2" class="abs pill" style="left:1190px;top:470px">✓ You decide who sees what</div>
+  <div id="b3" class="abs pill" style="left:430px;top:640px">⏻ Stop sharing any time</div>
+
+  <!-- S7: outro -->
+  <div id="outro" class="abs" style="left:0;top:0;width:1920px;height:1080px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px">
+    <img src="img/logo.png" style="width:120px;height:120px">
+    <div style="font:700 104px 'Bricolage Grotesque';color:#f1ecdf;letter-spacing:-.02em;line-height:1">LookAfter<span style="color:var(--peach)">AI</span></div>
+    <div style="font:600 40px Manrope;color:#cfdad3">Look after everyone you love.</div>
+    <div class="store" style="margin-top:26px">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><path d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.02-1.5-2.62-1.7-3.19-1.72-1.36-.14-2.65.8-3.34.8-.69 0-1.75-.78-2.88-.76-1.48.02-2.85.86-3.61 2.19-1.54 2.67-.39 6.63 1.11 8.8.73 1.06 1.6 2.25 2.75 2.2 1.1-.04 1.52-.71 2.85-.71s1.71.71 2.88.69c1.19-.02 1.94-1.08 2.66-2.15.84-1.23 1.19-2.42 1.21-2.48-.03-.01-2.32-.89-2.34-3.55zM14.18 6.14c.61-.74 1.02-1.76.91-2.78-.88.04-1.94.59-2.57 1.32-.56.65-1.06 1.69-.93 2.69.98.08 1.98-.5 2.59-1.23z"/></svg>
+      <div style="display:flex;flex-direction:column;line-height:1.1"><span style="font:500 17px Manrope">Download on the</span><span style="font:700 30px Manrope">App Store</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const io = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;      // easeInOutCubic
+const out = (x) => 1 - Math.pow(1 - x, 3);                                         // easeOutCubic
+const back = (x) => { const c = 1.5; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const p = (t, a, b, ease = io) => ease(clamp((t - a) / (b - a)));
+const lerp = (a, b, k) => a + (b - a) * k;
+const set = (el, o, tf = '') => { el.style.opacity = o; el.style.transform = tf; };
+// fade in over [a,a+d], fade out over [b,b+d]
+const win = (t, a, b, d = .5) => p(t, a, a + d) * (1 - p(t, b, b + d));
+
+// S1 chips: the scattered tools
+const CHIPS = [
+  ['🩸', 'Glucometer app', 470, 600], ['🧒', 'Kids’ health portal', 1180, 590], ['💊', 'Pharmacy reminder', 560, 760],
+  ['💬', 'Sibling group chat', 1090, 770], ['📄', 'Lab report PDF', 820, 860], ['⌚', 'Sleep tracker', 1330, 690],
+  ['📅', 'GP appointment', 400, 690], ['🔑', 'Portal passwords', 860, 650],
+];
+const chipEls = CHIPS.map(([ic, label, x, y]) => {
+  const el = document.createElement('div'); el.className = 'abs chip';
+  el.innerHTML = `<i>${ic}</i>${label}`; el.style.left = x + 'px'; el.style.top = y + 'px';
+  $('chips').appendChild(el); return el;
+});
+
+const CAPS = [
+  [7.6, 11.5, 'Home', 'One circle for the whole family'],
+  [11.5, 15.6, 'Ask Myra', 'Ask about anyone who shares with you'],
+  [15.6, 20.0, 'Lab reports', 'Upload a report. Understand it instantly.'],
+  [20.0, 23.3, 'Privacy', 'Private by default. Shared by choice.'],
+];
+const screenEls = [...document.querySelectorAll('#screens img')];
+const showScreen = (weights) => screenEls.forEach((im) => { im.style.opacity = weights[im.dataset.s] || 0; });
+const QUESTION = 'Did Mom take her medication today?';
+
+window.render = (t) => {
+  // Backgrounds: dark → cream (6.9–7.6) → dark (23.0–23.8)
+  const cream = p(t, 6.9, 7.6) * (1 - p(t, 23.0, 23.8));
+  $('bgCream').style.opacity = cream;
+
+  // S1: headline + drifting chips, then pulled into the orb
+  const h = win(t, .2, 3.3, .7);
+  set($('s1eyebrow'), h, `translateY(${(1 - p(t, .2, .9)) * 20}px)`);
+  set($('s1h1'), win(t, .35, 3.3, .7), `translateY(${(1 - p(t, .35, 1.1)) * 30}px)`);
+  set($('s1h2'), win(t, .6, 3.3, .7), `translateY(${(1 - p(t, .6, 1.3)) * 30}px)`);
+  chipEls.forEach((el, i) => {
+    const [, , x, y] = CHIPS[i];
+    const appear = p(t, .9 + i * .14, 1.5 + i * .14, out);
+    const pull = p(t, 3.3 + i * .04, 4.3 + i * .04);
+    const fx = Math.sin(t * 1.3 + i * 1.7) * 10, fy = Math.cos(t * 1.1 + i * 2.3) * 8;
+    const cx = 960 - (x + el.offsetWidth / 2), cy = 440 - (y + el.offsetHeight / 2);
+    set(el, appear * (1 - p(t, 3.9 + i * .04, 4.4 + i * .04)),
+      `translate(${fx + cx * pull}px, ${fy + cy * pull + (1 - appear) * 30}px) scale(${lerp(1, .2, pull)}) rotate(${(i % 2 ? 1 : -1) * 4 * (1 - appear)}deg)`);
+  });
+
+  // S2: orb grows, pulses, brand appears; everything lifts away
+  const orbIn = p(t, 3.7, 4.7, back), orbOut = p(t, 6.5, 7.2);
+  const pulse = 1 + Math.sin(t * 3) * .025 * orbIn;
+  set($('orb'), orbIn * (1 - orbOut), `scale(${orbIn * pulse * lerp(1, 2.6, orbOut)})`);
+  set($('brand'), win(t, 4.9, 6.5, .6), `translateY(${(1 - p(t, 4.9, 5.6)) * 24}px)`);
+  set($('tag'), win(t, 5.3, 6.5, .6), `translateY(${(1 - p(t, 5.3, 6.0)) * 24}px)`);
+
+  // Captions (cream scenes)
+  let ce = '', ch = '', co = 0, cy = 0;
+  for (const [a, b, e, hd] of CAPS) if (t >= a - .2 && t < b) {
+    ce = e; ch = hd; co = p(t, a - .2, a + .4) * (1 - p(t, b - .5, b)); cy = (1 - p(t, a - .2, a + .5)) * 22;
+  }
+  if ($('capHead').textContent !== ch) { $('capHead').textContent = ch; $('capEye').textContent = ce; }
+  set($('capEye'), co, `translateY(${cy}px)`); set($('capHead'), co, `translateY(${cy}px)`);
+
+  // Main phone: rises at 7.4, stays through 23.2
+  const rise = p(t, 7.3, 8.4, out), leave = p(t, 22.9, 23.6);
+  const zoomAsk = p(t, 11.5, 12.2) * (1 - p(t, 15.4, 16.0));
+  set($('phone'), rise * (1 - leave), `translateY(${(1 - rise) * 500 + leave * 60}px) scale(${lerp(.98, 1, rise) * (1 - zoomAsk * .02) * lerp(1, .94, leave)})`);
+  showScreen({
+    dashboard: 1 - p(t, 11.5, 12.0),
+    ai: p(t, 11.5, 12.0) * (1 - p(t, 16.4, 16.8)),
+    analyzing: p(t, 16.4, 16.8) * (1 - p(t, 17.8, 18.2)),
+    analysis: p(t, 17.8, 18.2) * (1 - p(t, 20.0, 20.5)),
+    familySharing: p(t, 20.0, 20.5),
+  });
+
+  // S3: family pills pop around the phone, then the alert
+  [['pMom', 8.5], ['pDad', 8.7], ['pGran', 8.9], ['pYou', 9.1]].forEach(([id, a], i) => {
+    const k = p(t, a, a + .5, back), o = p(t, a, a + .3) * (1 - p(t, 11.1, 11.5));
+    set($(id), o, `scale(${k}) translateY(${Math.sin(t * 1.5 + i) * 6}px)`);
+  });
+  const al = p(t, 9.6, 10.2, out);
+  set($('alert'), al * (1 - p(t, 11.1, 11.5)), `translateX(${(1 - al) * 60}px)`);
+
+  // S4: typed question, then the answer with its source
+  const typed = Math.round(QUESTION.length * clamp((t - 12.2) / 1.3));
+  $('askText').textContent = QUESTION.slice(0, typed) + (t > 12.2 && t < 13.6 && Math.floor(t * 3) % 2 ? '|' : '');
+  const ak = p(t, 11.9, 12.4, out);
+  set($('ask'), ak * (1 - p(t, 15.1, 15.5)), `translateY(${(1 - ak) * 30}px)`);
+  const an = p(t, 13.8, 14.4, back);
+  set($('answer'), p(t, 13.8, 14.1) * (1 - p(t, 15.1, 15.5)), `scale(${an}) translateY(${(1 - an) * 20}px)`);
+
+  // S5: the PDF flies into the phone, analysis, then the fan of phones
+  const dIn = p(t, 15.7, 16.2, out), dFly = p(t, 16.2, 16.8);
+  set($('doc'), dIn * (1 - p(t, 16.6, 16.85)),
+    `translate(${lerp(0, -300, dFly)}px, ${lerp((1 - dIn) * 30, 220, dFly)}px) scale(${lerp(1, .3, dFly)}) rotate(${lerp(6, 0, dFly)}deg)`);
+  const fan = p(t, 18.4, 19.2, out) * (1 - p(t, 19.7, 20.2));
+  set($('phoneL'), fan, `translateX(${lerp(245, -40, fan)}px) translateY(${lerp(0, 40, fan)}px) rotate(${-7 * fan}deg) scale(.9)`);
+  set($('phoneR'), fan, `translateX(${lerp(-245, 40, fan)}px) translateY(${lerp(0, 40, fan)}px) rotate(${7 * fan}deg) scale(.9)`);
+
+  // S6: privacy badges
+  [['b1', 20.7], ['b2', 21.0], ['b3', 21.3]].forEach(([id, a]) => {
+    const k = p(t, a, a + .5, back);
+    set($(id), p(t, a, a + .3) * (1 - p(t, 22.7, 23.1)), `scale(${k})`);
+  });
+
+  // S7: outro
+  const o = p(t, 23.6, 24.4, out);
+  set($('outro'), o, `translateY(${(1 - o) * 30}px)`);
+};
+
+window.ready = Promise.all([document.fonts.ready, ...[...document.images].map((im) => im.decode().catch(() => {}))])
+  .then(() => { window.render(0); return true; });
+window.DURATION = 26.5;
+</script>
+</body>
+</html>

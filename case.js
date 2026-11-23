@@ -8,6 +8,11 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.title = `${CASE.title} — Ishan Tandel`;
   if (CASE.accent) document.documentElement.style.setProperty('--cs-accent', CASE.accent);
+  // Optional brand theme: { fonts: '<Google Fonts css url>', vars: { '--bg': '#…', … } }
+  if (CASE.theme) {
+    Object.entries(CASE.theme.vars || {}).forEach(([k, v]) => document.documentElement.style.setProperty(k, v));
+    if (CASE.theme.fonts) document.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="${CASE.theme.fonts}">`);
+  }
 
   const esc = (t) => String(t ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const rich = (t, tag = 'strong') => esc(t).replace(/\*(.+?)\*/g, `<${tag}>$1</${tag}>`);
@@ -33,11 +38,23 @@
   // A wide image that opens full size in a new tab
   const figure = (im) => `
     <figure class="cs-fig cs-reveal ${im.bg ? 'cs-fig--bg' : ''}" style="${im.max ? `max-width:${im.max}px;` : ''}${im.bg ? `--fig-bg:${esc(im.bg)}` : ''}">
-      ${im.src
+      ${im.src && /\.(mp4|webm)$/i.test(im.src)
+        ? `<video src="${esc(im.src)}" ${im.poster ? `poster="${esc(im.poster)}"` : ''} autoplay muted loop playsinline preload="metadata" aria-label="${esc(im.label)}"></video>`
+        : im.src
         ? `<a href="${esc(im.src)}" target="_blank" rel="noopener"><img src="${esc(im.src)}" alt="${esc(im.label)}" loading="lazy" decoding="async"></a>`
         : `<span class="cs-ph">${esc(im.label || 'Image')}</span>`}
       ${im.caption ? `<figcaption>${rich(im.caption)}</figcaption>` : ''}
     </figure>`;
+
+  // App store download buttons: official badges. Entries need href, or show: true to render a non-link badge
+  const BADGES = { appstore: ['img/badges/app-store.webp', 'Download on the App Store'], googleplay: ['img/badges/google-play.webp', 'Get it on Google Play'] };
+  const stores = (list) => {
+    const items = (list || []).filter((x) => BADGES[x.store] && (x.href || x.show));
+    const img = (x) => `<img src="${BADGES[x.store][0]}" alt="${BADGES[x.store][1]}">`;
+    return items.length ? `<div class="cs-stores cs-reveal">${items.map((x) => x.href
+      ? `<a class="cs-store" href="${esc(x.href)}" target="_blank" rel="noopener">${img(x)}</a>`
+      : `<span class="cs-store">${img(x)}</span>`).join('')}</div>` : '';
+  };
 
   const R = {
     hero: (b) => `
@@ -45,11 +62,25 @@
         <div class="cs-icon cs-reveal">${b.icon ? `<img src="${esc(b.icon)}" alt="">` : '<span></span>'}</div>
         <h1 class="cs-title cs-reveal">${rich(b.title, 'em')}</h1>
         <p class="cs-intro cs-reveal">${rich(b.intro)}</p>
-        ${b.meta ? `<dl class="cs-meta cs-reveal">${b.meta.map((m) => `<div><dt>${esc(m.label)}</dt><dd>${esc(m.value)}</dd></div>`).join('')}</dl>` : ''}
+        ${b.meta ? `<dl class="cs-meta cs-reveal">${b.meta.map((m) => `<div><dt>${esc(m.label)}</dt><dd>${m.href ? `<a href="${esc(m.href)}" target="_blank" rel="noopener">${esc(m.value)} ↗</a>` : esc(m.value)}</dd></div>`).join('')}</dl>` : ''}
+        ${stores(b.stores)}
+        ${b.cta ? `<a class="btn cs-hero-cta cs-reveal" href="${esc(b.cta.href)}"${/^https?:/.test(b.cta.href) ? ' target="_blank" rel="noopener"' : ''}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
+          ${esc(b.cta.label)}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><polyline points="8 7 17 7 17 16"/></svg>
+        </a>` : ''}
       </section>`,
 
-    showcase: (b) => `
-      <section class="cs-sec cs-showcase">
+    // marquee: true loops the screens sideways (two copies of the set, so it never runs out)
+    // (an odd-sized set is doubled first so the up/down stagger lines up where the loop restarts)
+    showcase: (b) => b.marquee ? `
+      <section class="cs-sec cs-showcase cs-showcase--marquee">
+        <div class="cs-marquee"><div class="cs-marquee-track">
+          ${(b.images.length % 2 ? [...b.images, ...b.images] : b.images).map((im, i) => phone(i < b.images.length ? im : { ...im, label: '' }, i % 2 ? '' : 'is-low')).join('')}
+          <div class="cs-marquee-copy" aria-hidden="true">${(b.images.length % 2 ? [...b.images, ...b.images] : b.images).map((im, i) => phone({ ...im, label: '' }, i % 2 ? '' : 'is-low')).join('')}</div>
+        </div></div>
+      </section>` : `
+      <section class="cs-sec cs-showcase${b.scroll ? ' cs-showcase--scroll' : ''}">
         <div class="cs-row">${b.images.map((im, i) => phone(im, 'cs-reveal" style="--d:' + i)).join('')}</div>
       </section>`,
 
@@ -126,6 +157,28 @@
               <div><p class="cs-tag">Problem</p><h3>${esc(r.problem)}</h3><p class="cs-note">${rich(r.note)}</p></div>
               <svg class="cs-pp-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="14 6 20 12 14 18"/></svg>
               <div><p class="cs-tag">Principle</p><h3 class="cs-accent">${esc(r.principle)}</h3></div>
+            </div>`).join('')}
+        </div>
+      </section>`,
+
+    // Decision → impact: what I decided, why, and what it changed (mentor feedback: lead with this)
+    decisions: (b) => `
+      <section class="cs-sec">
+        ${eyebrow(b.eyebrow)}${h2(b.title)}${lede(b.text)}
+        <div class="cs-decisions">
+          ${b.items.map((r, i) => `
+            <div class="cs-dc cs-reveal" style="--d:${i}">
+              <div class="cs-dc-d">
+                <p class="cs-tag"><span class="cs-dc-n">${String(i + 1).padStart(2, '0')}</span>Decision I made</p>
+                <h3>${rich(r.decision)}</h3>
+                ${r.why ? `<p class="cs-note">${rich(r.why)}</p>` : ''}
+              </div>
+              <svg class="cs-pp-arrow cs-dc-arrow" viewBox="0 0 24 24" aria-hidden="true"><line x1="4" y1="12" x2="20" y2="12"/><polyline points="14 6 20 12 14 18"/></svg>
+              <div class="cs-dc-i">
+                <p class="cs-tag">The impact</p>
+                ${r.num ? `<p class="cs-dc-v">${esc(r.num)}</p>` : ''}
+                <p class="cs-dc-t">${rich(r.impact)}</p>
+              </div>
             </div>`).join('')}
         </div>
       </section>`,
@@ -212,6 +265,7 @@
         <div class="cs-reveal">${listHTML(b)}</div>
         ${b.callout ? `<div class="cs-callout cs-reveal"><span>${esc(b.callout.label)}</span><p>${rich(b.callout.text)}</p></div>` : ''}
         ${(b.images || []).map((im) => figure(im)).join('')}
+        ${b.screens ? `<div class="cs-row cs-screens">${b.screens.map((im, i) => phone(im, 'cs-reveal" style="--d:' + i)).join('')}</div>` : ''}
       </section>`,
 
     // Wide image(s): images [{ src, label, max }]
@@ -285,8 +339,9 @@
       <section class="cs-sec cs-end">
         <div class="cs-icon cs-reveal"><span></span></div>
         <h2 class="cs-h2 cs-reveal">${rich(b.title)}</h2>
-        ${b.cta ? `<a class="btn cs-reveal" href="${esc(b.cta.href)}">${esc(b.cta.label)}
+        ${b.cta ? `<a class="btn cs-reveal" href="${esc(b.cta.href)}"${/^https?:/.test(b.cta.href) ? ' target="_blank" rel="noopener"' : ''}>${esc(b.cta.label)}
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>` : ''}
+        ${stores(b.stores)}
       </section>`,
   };
 

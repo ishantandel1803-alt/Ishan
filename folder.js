@@ -1,6 +1,8 @@
 /* ---------- Visual archive folder ----------
    Edit the pictures here.
      name   shown as alt text (and on the placeholder until you add an image)
+     slides one container per theme: [{ src, video?, caption, fit?: 'contain', pos?: 'top' }]. The
+            container cycles through them; name + note show in the caption bar.
      src    image path, e.g. 'img/visual/app.webp' ('' = placeholder)
      video  optional .mp4 that plays instead of the image
      ratio  width / height of the picture
@@ -10,27 +12,53 @@
 --------------------------------------------- */
 const FOLDERS = [
   {
-    label: 'UI archive',
+    // Craft outside the case studies
+    label: 'Things I make',
     color: '#49a862',
     pictures: [
-      { name: 'Invite screen',   src: '', ratio: 0.66, size: 2.1, at: [0.70, 0.23] },
-      { name: 'Share template',  src: '', ratio: 1.2,  size: 1.9, at: [0.28, 0.21] },
-      { name: 'Interface demo',  src: '', ratio: 0.44, size: 3.6, at: [0.12, 0.61] },
-      { name: 'AI agent',        src: '', ratio: 0.46, size: 2.2, at: [0.28, 0.78] },
-      { name: 'Fitness app',     src: '', ratio: 0.41, size: 3.6, at: [0.885, 0.50] },
-      { name: '3D objects',      src: '', ratio: 3.15, size: 1.15, at: [0.64, 0.85] },
+      { name: 'Side builds', note: 'Products I build for fun, end to end', ratio: 0.85, size: 3.1, at: [0.15, 0.48], slides: [
+        { src: 'img/work/researchmap-demo-poster.jpg', video: 'img/work/researchmap-demo.mp4', caption: 'ResearchMap: a paper mapped in 3D, explored by hand' },
+        { src: 'img/folders/optivue.jpg', caption: 'Optivue: café footfall and staffing, built in 3 days', pos: 'top' },
+      ] },
+      { name: 'Video & motion', note: 'Explainers, product films, promos', ratio: 0.66, size: 3.2, at: [0.85, 0.40], slides: [
+        { src: 'img/wsupmate/how-it-works-poster.jpg', video: 'img/wsupmate/how-it-works.mp4', caption: 'How W’supMate works', fit: 'contain' },
+        { src: 'img/wsupmate/problem-solution-poster.jpg', video: 'img/wsupmate/problem-solution.mp4', caption: 'W’supMate: the problem, then the product', fit: 'contain' },
+        { src: 'img/folders/ffl-promo-poster.jpg', video: 'img/folders/ffl-promo.mp4', caption: 'Future Founders Lab promo', fit: 'contain' },
+      ] },
+      { name: 'Graphic design', note: 'Posters, store graphics, banners', ratio: 1.15, size: 2.2, at: [0.50, 0.22], slides: [
+        { src: 'img/folders/ffl-poster.jpg', caption: 'Future Founders Lab poster' },
+        { src: 'img/folders/wsupmate-play-graphic.jpg', caption: 'W’supMate Google Play feature graphic' },
+        { src: 'img/folders/wsupmate-banner.jpg', caption: 'W’supMate launch banner' },
+      ] },
     ],
   },
   {
-    label: 'Brand & graphics',
+    // Life outside work (mentor feedback: show personal passions on the homepage)
+    label: 'Off the clock',
     color: '#fc7a69',
     pictures: [
-      { name: 'Logo explorations', src: '', ratio: 1.0,  size: 2.0, at: [0.72, 0.22] },
-      { name: 'Poster',            src: '', ratio: 0.72, size: 2.6, at: [0.30, 0.25] },
-      { name: 'Social posts',      src: '', ratio: 1.0,  size: 1.9, at: [0.13, 0.62] },
-      { name: 'Illustration',      src: '', ratio: 0.8,  size: 2.2, at: [0.34, 0.80] },
-      { name: 'Packaging',         src: '', ratio: 0.75, size: 2.6, at: [0.88, 0.55] },
-      { name: 'Banner',            src: '', ratio: 3.0,  size: 1.15, at: [0.64, 0.86] },
+      { name: 'Events I organised', subs: true, note: 'Future Founders Lab, Kingston University', ratio: 1.15, size: 2.7, at: [0.86, 0.55], slides: [
+        { src: 'img/folders/ffl-building.jpg', caption: 'Future Founders Lab' },
+        { src: 'img/folders/ffl-team.jpg', caption: 'Future Founders Lab' },
+        { src: 'img/folders/ffl-img_0946.jpg', caption: 'Future Founders Lab' },
+        { src: 'img/folders/ffl-img_0926.jpg', caption: 'Future Founders Lab' },
+      ] },
+      { name: 'Travel', subs: true, note: 'Where I go to reset', ratio: 0.85, size: 3.0, at: [0.14, 0.55], slides: [
+        { src: 'img/about/ring/06.jpg', caption: 'Streets of Dubai' },
+        { src: 'img/about/ring/05.jpg', caption: 'New York, new energy' },
+        { src: 'img/about/ring/13.jpg', caption: 'No brakes, just rapids' },
+        { src: 'img/about/ring/10.jpg', caption: 'Trails over treadmills' },
+      ] },
+      { name: 'Published research', note: 'IEEE I2CT 2024, peer-reviewed', ratio: 1.05, size: 2.2, at: [0.62, 0.22],
+        href: 'https://doi.org/10.1109/I2CT61223.2024.10543380', link: 'Read the paper', slides: [
+        { src: 'img/folders/ieee-paper.jpg', caption: 'IEEE I2CT 2024: eye-blink Morse code for people with ALS', pos: 'top' },
+        { src: 'img/blinkspeak/blinkspeak-demo-wide-poster.jpg', video: 'img/blinkspeak/blinkspeak-demo-wide.mp4', caption: 'BlinkSpeak: the research, rebuilt as a browser app' },
+        { src: 'img/blinkspeak/interface.jpg', caption: 'Live eye tracking, Morse buffer and decoded message', fit: 'contain' },
+      ] },
+      { name: 'Events & competitions', note: 'Events I took part in', ratio: 1.05, size: 2.2, at: [0.38, 0.22], slides: [
+        { src: 'img/about/ring/01.jpg', caption: 'Bright Ideas finalist, Kingston University', pos: 'center 30%' },
+        { src: 'img/about/ring/03.jpg', caption: 'Meta VR Innovation Day' },
+      ] },
     ],
   },
 ];
@@ -92,12 +120,51 @@ const FOLDER_OPTS = {
     flap: anchor.querySelector('.pf-flap'),
   }));
 
-  const media = (p, cls, allowVideo) =>
+  const media = (q, cls, allowVideo) => { const p = q.slides ? q.slides[0] : q; return (
     p.video && allowVideo
       ? `<video class="${cls}" src="${esc(p.video)}" ${p.src ? `poster="${esc(p.src)}"` : ''} aria-label="${esc(p.name)}" autoplay muted loop playsinline draggable="false"></video>`
       : p.src
       ? `<img class="${cls}" src="${esc(p.src)}" alt="${esc(p.name)}" draggable="false">`
-      : `<span class="${cls} pf-ph" aria-hidden="true"><span>${esc(p.name)}</span></span>`;
+      : `<span class="${cls} pf-ph" aria-hidden="true"><span>${esc(p.name)}</span></span>`); };
+
+  // A theme container: slides stacked, one visible at a time, with a solid caption bar
+  const themeHTML = (p) => `
+    <div class="pf-slides">${p.slides.map((x, k) => {
+      const st = `${x.fit ? `object-fit:${x.fit};` : ''}${x.pos ? `object-position:${x.pos};` : ''}`;
+      return x.video
+        ? `<video class="pf-slide${k ? '' : ' on'}" src="${esc(x.video)}" poster="${esc(x.src)}" muted loop playsinline preload="metadata" style="${st}" aria-label="${esc(x.caption)}"></video>`
+        : `<img class="pf-slide${k ? '' : ' on'}" src="${esc(x.src)}" alt="${esc(x.caption)}" draggable="false" style="${st}">`;
+    }).join('')}</div>
+    <div class="pf-bar">
+      <div class="pf-bar-top"><b title="${esc(p.note || '')}">${esc(p.name)}</b>${p.slides.length > 1 ? `<span class="pf-dots">${p.slides.map((_, k) => `<i class="${k ? '' : 'on'}"></i>`).join('')}</span>` : ''}</div>
+      ${p.subs ? `<p class="pf-bar-cap">${esc(p.slides[0].caption)}</p>` : ''}
+      ${p.href ? `<a class="pf-bar-link" href="${esc(p.href)}" target="_blank" rel="noopener">${esc(p.link || 'Open')} ↗</a>` : ''}
+    </div>`;
+
+  // Cycle the slides every few seconds (paused on hover; stops once the container is put away)
+  function startSlides(el) {
+    const slides = [...el.querySelectorAll('.pf-slide')], dots = [...el.querySelectorAll('.pf-dots i')];
+    const cap = el.querySelector('.pf-bar-cap');
+    let k = 0, hover = false;
+    const show = (n) => {
+      slides[k].classList.remove('on'); dots[k]?.classList.remove('on');
+      if (slides[k].tagName === 'VIDEO') slides[k].pause();
+      k = n;
+      slides[k].classList.add('on'); dots[k]?.classList.add('on');
+      const txt = slides[k].getAttribute('alt') || slides[k].getAttribute('aria-label');
+      if (cap && txt !== cap.textContent) { cap.classList.add('swap'); setTimeout(() => { cap.textContent = txt; cap.classList.remove('swap'); }, 300); }
+      if (slides[k].tagName === 'VIDEO') { slides[k].currentTime = 0; slides[k].play().catch(() => {}); }
+    };
+    if (slides[0].tagName === 'VIDEO') slides[0].play().catch(() => {});
+    el.addEventListener('pointerenter', () => { hover = true; });
+    el.addEventListener('pointerleave', () => { hover = false; });
+    if (slides.length < 2 || reduced) return;
+    const ms = slides.some((x) => x.tagName === 'VIDEO') ? 6000 : 3400;
+    const t = setInterval(() => {
+      if (!el.isConnected) return clearInterval(t);
+      if (!hover) show((k + 1) % slides.length);
+    }, ms);
+  }
 
   // Pictures peeking out of each closed folder
   const PEEK_POSE = [{ y: 20, r: -4 }, { y: 4, r: 0 }, { y: 14, r: 4 }];
@@ -225,7 +292,8 @@ const FOLDER_OPTS = {
       el.className = 'pf-win';
       el.setAttribute('role', 'group');
       el.setAttribute('aria-label', p.name);
-      el.innerHTML = media(p, 'pf-media', true);
+      el.innerHTML = p.slides ? themeHTML(p) : media(p, 'pf-media', true);
+      if (p.slides) { el.classList.add('pf-theme'); startSlides(el); }
       el.style.cssText = `left:${box.x}px;top:${box.y}px;z-index:${++z};--pf-w:${box.w}px;--pf-h:${box.h}px;--pf-color:${f.cfg.color || '#49a862'}`;
       layer.appendChild(el);
       const dx = c.x - (box.x + box.w / 2), dy = c.y - (box.y + box.h / 2);
@@ -279,6 +347,7 @@ const FOLDER_OPTS = {
   function drag(w) {
     const el = w.el;
     el.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('a')) return;
       el.style.zIndex = ++z;
       if (e.button !== 0) return;
       if (w.anim?.playState === 'running') w.anim.finish();

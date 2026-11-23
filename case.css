@@ -48,7 +48,8 @@
 /* Hero */
 .cs-hero { min-height: 92svh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding-top: 96px; }
 .cs-icon { width: 72px; height: 72px; margin-bottom: 28px; border-radius: 18px; overflow: hidden; box-shadow: 0 2px 4px rgba(30,30,32,.08), 0 16px 32px -12px rgba(30,30,32,.3); }
-.cs-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cs-icon { background: var(--cs-icon-bg, transparent); padding: var(--cs-icon-pad, 0); }
+.cs-icon img { width: 100%; height: 100%; object-fit: var(--cs-icon-fit, cover); display: block; }
 .cs-icon span { display: block; width: 100%; height: 100%; background: linear-gradient(145deg, color-mix(in srgb, var(--cs-accent) 70%, #fff), var(--cs-accent)); }
 .cs-title { margin: 0; max-width: 14em; font: 500 clamp(34px, 4.6vw, 72px)/1.05 var(--display); letter-spacing: -0.03em; }
 .cs-title em { font-style: normal; color: var(--cs-accent); }
@@ -57,6 +58,9 @@
   background: var(--glass-light); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); box-shadow: var(--glass-rim-light), 0 6px 20px -10px rgba(30,30,32,.25); }
 .cs-meta dt { font: 600 11px/1 var(--ui); letter-spacing: .12em; text-transform: uppercase; color: rgba(30,30,32,.5); margin-bottom: 6px; }
 .cs-meta dd { margin: 0; font: 500 14px/1.3 var(--ui); }
+.cs-meta:has(> div:nth-child(5)) { grid-template-columns: repeat(5, auto); gap: 12px 36px; }
+.cs-meta dd a { color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); }
+.cs-meta dd a:hover { text-decoration-color: currentColor; }
 
 /* Phone frame */
 .cs-phone {
@@ -72,9 +76,37 @@
 /* Rows of screens */
 .cs-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 240px)); justify-content: center; gap: clamp(16px, 2.2vw, 40px); align-items: end; }
 .cs-panel .cs-note { margin-bottom: 24px; }
+.cs-screens { margin-top: 56px; }   /* phone row under a list block (screens: [...]) */
 .cs-showcase { padding-top: 24px; }
 .cs-showcase .cs-row { grid-template-columns: repeat(4, minmax(0, 260px)); }
 .cs-showcase .cs-phone:nth-child(odd) { translate: 0 32px; }
+/* Scrolling strip of store screenshots (showcase with scroll: true) */
+.cs-showcase--scroll { width: 100%; }
+.cs-showcase--scroll .cs-row { display: flex; justify-content: flex-start; align-items: start; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+  padding: 8px max(var(--page-margin), (100% - 1120px) / 2) 64px; scroll-padding-inline: max(var(--page-margin), (100% - 1120px) / 2); }
+.cs-showcase--scroll .cs-row::-webkit-scrollbar { display: none; }
+.cs-showcase--scroll .cs-phone { flex: 0 0 clamp(200px, 22vw, 270px); aspect-ratio: 460 / 996; scroll-snap-align: start; background: transparent; }
+/* Optional button under the hero (hero: cta: { label, href }) */
+.cs-hero-cta { margin-top: 32px; display: inline-flex; align-items: center; gap: 10px; }
+
+/* Video in a figure block (src ends in .mp4) */
+.cs-fig video { display: block; width: 100%; height: auto; border-radius: 20px; box-shadow: 0 2px 4px rgba(30,30,32,.06), 0 30px 60px -28px rgba(30,30,32,.45); }
+
+/* Endless sideways loop of store screenshots (showcase with marquee: true) */
+.cs-showcase--marquee { width: 100%; padding-top: 24px; }
+.cs-marquee { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.cs-marquee-track, .cs-marquee-copy { display: flex; align-items: start; }
+.cs-marquee-track { width: max-content; padding: 8px 0 40px; animation: cs-marquee 140s linear infinite; will-change: transform; }
+.cs-marquee:hover .cs-marquee-track { animation-play-state: paused; }
+.cs-showcase .cs-marquee .cs-phone { flex: 0 0 clamp(200px, 22vw, 270px); aspect-ratio: 460 / 996; margin: 0 clamp(16px, 2.2vw, 40px) 0 0; background: transparent; translate: none; }
+@keyframes cs-marquee { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .cs-marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+  .cs-marquee-track { animation: none; padding-inline: var(--page-margin); }
+  .cs-marquee-copy { display: none; }
+}
+/* Accent on dark sections, when a brand accent is too dark for them */
+.cs-sec.cs-dark strong, .cs-sec.cs-dark .cs-accent, .cs-sec.cs-dark .cs-num-v { color: var(--cs-accent-dark, var(--cs-accent)); }
 
 /* Context duo */
 .cs-duo { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); margin-top: 48px; }
@@ -150,6 +182,19 @@
 .cs-pp h3 { margin: 0; font: 500 clamp(18px, 1.6vw, 26px)/1.2 var(--display); letter-spacing: -0.01em; }
 .cs-pp-n { font: 500 13px var(--ui); opacity: .4; }
 .cs-pp-arrow { width: 28px; height: 28px; fill: none; stroke: var(--cs-accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Decisions → impact */
+.cs-decisions { display: grid; gap: 16px; margin-top: 32px; }
+.cs-dc { display: grid; grid-template-columns: 1.15fr 40px 1fr; gap: 28px; align-items: center; padding: 28px; border-radius: 20px; background: #fff;
+         box-shadow: 0 1px 2px rgba(30,30,32,.05), 0 12px 32px -18px rgba(30,30,32,.22); }
+.cs-dc h3 { margin: 6px 0 0; font: 500 clamp(19px, 1.7vw, 26px)/1.22 var(--display); letter-spacing: -0.01em; }
+.cs-dc .cs-note { margin: 10px 0 0; }
+.cs-dc-n { display: inline-block; margin-right: 10px; opacity: .45; }
+.cs-dc-i { align-self: stretch; display: flex; flex-direction: column; justify-content: center; padding: 20px 24px; border-radius: 14px;
+           background: color-mix(in srgb, var(--cs-accent) 8%, #fff); }
+.cs-dc-v { margin: 6px 0 2px; font: 500 clamp(36px, 4vw, 56px)/1 var(--display); letter-spacing: -0.03em; color: var(--cs-accent); font-variant-numeric: tabular-nums; }
+.cs-dc-t { margin: 6px 0 0; font: 500 16px/1.45 var(--ui); }
+.cs-dc-v + .cs-dc-t { margin-top: 4px; font-weight: 400; opacity: .8; }
 
 /* Feature: before / after */
 .cs-feature-head { max-width: 40em; }
@@ -261,11 +306,13 @@
 
 /* Tablet / phone */
 @media (max-width: 860px) {
-  .cs-meta { grid-template-columns: repeat(2, auto); }
+  .cs-meta, .cs-meta:has(> div:nth-child(5)) { grid-template-columns: repeat(2, auto); }
   .cs-voices { grid-template-columns: 1fr; }
   .cs-nums { grid-template-columns: 1fr; }
   .cs-pp { grid-template-columns: 32px 1fr; }
   .cs-pp-arrow { display: none; }
+  .cs-dc { grid-template-columns: 1fr; gap: 16px; padding: 20px; }
+  .cs-dc-arrow { display: none; }
   .cs-pp > div:last-child { grid-column: 2; }
   .cs-reflect li { grid-template-columns: 32px 1fr; }
   .cs-reflect li .cs-note { grid-column: 2; }
@@ -295,3 +342,12 @@
 @media (prefers-reduced-motion: reduce) {
   .cs-reveal { opacity: 1; transform: none; transition: none; }
 }
+
+/* App store download buttons (hero / end blocks: stores: [...]) */
+.cs-stores { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; }
+.cs-end .cs-stores { margin-top: 16px; }
+.cs-store { display: block; line-height: 0; transition: transform .2s ease; }
+a.cs-store:hover { transform: translateY(-2px); }
+.cs-store img { height: 52px; width: auto; }
+.cs-stores { align-items: center; }
+.cs-store img[src*="google-play"] { height: 56px; }

@@ -5,9 +5,9 @@
                  hint = what the cursor pill says over that row
 ----------------------------------------------------------------------- */
 const TESTIMONIALS = [
-  { quote: "Working with Ishan, I've come to appreciate his intuitive understanding of design. From a client's perspective, it's ideal when your designer not only understands the brief but consistently exceeds expectations without needing detailed instructions.", name: 'Chaitanya Pandit', role: 'Co-founder', company: 'EnableWealth', image: '' },
-  { quote: 'Ishan has a great design and UX sense. Very keen on experimenting and learning new things as well.', name: 'Badal Agrawal', role: 'Sr. Product Manager', company: 'CoinDCX', image: '' },
-  { quote: 'Ishan is inquisitive in nature and performs all his given tasks in perfection. He goes beyond what is expected and explores various solutions.', name: 'Jay Kiruthika', role: 'Senior Lecturer', company: 'Kingston University', image: '' },
+  { quote: "Working with Ishan, I've come to appreciate his intuitive understanding of design. From a client's perspective, it's ideal when your designer not only understands the brief but consistently exceeds expectations without needing detailed instructions.", name: 'Chaitanya Pandit', role: 'Co-founder', company: 'EnableWealth', image: 'img/testimonials/chaitanya-pandit.jpg' },
+  { quote: 'Ishan has a great design and UX sense. Very keen on experimenting and learning new things as well.', name: 'Badal Agrawal', role: 'Sr. Product Manager', company: 'CoinDCX (previously PM at Zoth)', image: 'img/testimonials/badal-agrawal.jpg' },
+  { quote: 'Ishan is inquisitive in nature and performs all his given tasks in perfection. He goes beyond what is expected and explores various solutions.', name: 'Jay Kiruthika', role: 'Senior Lecturer', company: 'Kingston University', image: 'img/testimonials/jay-kiruthika.jpg' },
 ];
 
 const CONTACT = [

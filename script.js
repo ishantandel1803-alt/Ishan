@@ -363,21 +363,34 @@ window.Cursor = (() => {
     return `<img src="${esc(p.media)}" alt="${esc(p.alt || p.title)}" loading="lazy"${p.position ? ` style="object-position:${esc(p.position)}"` : ''}>`;
   }
 
+  // Official store badges; a card with badges becomes a div with a full-card link behind them (no nested links)
+  const BADGE = { appstore: ['img/badges/app-store.webp', 'Download on the App Store'], googleplay: ['img/badges/google-play.webp', 'Get it on Google Play'] };
+  const badges = (list) => {
+    const items = (list || []).filter((x) => BADGE[x.store] && (x.href || x.show));
+    return items.length ? `<div class="pro-stores">${items.map((x) => {
+      const img = `<img src="${BADGE[x.store][0]}" alt="${BADGE[x.store][1]}" loading="lazy">`;
+      return x.href ? `<a class="pro-store" href="${esc(x.href)}" target="_blank" rel="noopener">${img}</a>` : `<span class="pro-store">${img}</span>`;
+    }).join('')}</div>` : '';
+  };
+
   grid.innerHTML = PROJECTS.map((p) => {
-    const tag = p.href ? 'a' : 'div';
-    const link = p.href ? ` href="${esc(p.href)}"` : '';
+    const storeRow = badges(p.stores);
+    const tag = p.href && !storeRow ? 'a' : 'div';
+    const ext = p.href && /^https?:/.test(p.href) ? ' target="_blank" rel="noopener"' : '';
+    const link = tag === 'a' ? ` href="${esc(p.href)}"${ext}` : '';
+    const cover = p.href && storeRow ? `<a class="pro-link" href="${esc(p.href)}"${ext} aria-label="${esc(p.title)}"></a>` : '';
     const foot = p.status === 'wip'
       ? `<button class="pro-sign" type="button" aria-label="Still fixing bugs — click to squash one">
            <span class="pro-sign-bug">${bug}</span>
            <span class="pro-sign-board"><span class="pro-sign-text">Fixing bugs</span><span class="pro-sign-count"></span></span>
          </button>`
       : `<span class="btn btn--icon pro-cta" aria-hidden="true">${arrow}</span>`;
-    return `<${tag} class="pro-card" data-filters="${esc(p.filters.join('|'))}"${link}>
-      <div class="pro-media">${media(p)}</div>
-      <p class="pro-eyebrow">${esc(p.audience)}<span>·</span>${esc(p.descriptor)}</p>
+    return `<${tag} class="pro-card${storeRow ? ' has-stores' : ''}" data-filters="${esc(p.filters.join('|'))}"${p.hideInAll ? ' data-hide-all="1" hidden' : ''}${link}>
+      ${cover}<div class="pro-media">${media(p)}${p.badge ? `<span class="pro-badge">${esc(p.badge)}</span>` : ''}</div>
+      <p class="pro-eyebrow">${p.company ? `<b class="pro-company">${esc(p.company)}</b><span>·</span>` : ''}${esc(p.audience)}<span>·</span>${esc(p.descriptor)}</p>
       <h3 class="pro-title">${esc(p.title)}</h3>
       <p class="pro-summary">${esc(p.summary)}</p>
-      ${foot}
+      ${storeRow ? `<div class="pro-foot">${foot}${storeRow}</div>` : foot}
     </${tag}>`;
   }).join('');
 
@@ -392,7 +405,7 @@ window.Cursor = (() => {
     b.addEventListener('click', () => {
       seg.querySelectorAll('.pro-filter').forEach((x) => { x.classList.toggle('active', x === b); x.setAttribute('aria-pressed', x === b); });
       grid.querySelectorAll('.pro-card').forEach((card) => {
-        const show = name === 'All' || card.dataset.filters.split('|').includes(name);
+        const show = name === 'All' ? !card.dataset.hideAll : card.dataset.filters.split('|').includes(name);
         card.hidden = !show;
         if (show && !reduced) card.animate([{ opacity: 0, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }], { duration: 350, easing: 'ease-out' });
       });
@@ -450,7 +463,7 @@ window.Cursor = (() => {
       t.classList.toggle('active', k === i);
       if (k === i) t.setAttribute('aria-current', 'true'); else t.removeAttribute('aria-current');
     });
-    glow.style.setProperty('--glow-x', tabs[i].offsetLeft - 6 + 'px');
+    glow.style.setProperty('--glow-x', tabs[i].offsetLeft - 8 + 'px');
   }
 
   // Section tops are measured once (and on resize), not on every scroll frame

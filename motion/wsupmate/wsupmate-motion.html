@@ -1,0 +1,233 @@
+<!doctype html>
+<!--
+  W'supMate product motion for the Work card (img/work/wsupmate-flow.mp4): 1080x1080, 16 s seamless loop.
+  Same recipe as the Zoth film: two phones with the real app screens, a camera that moves between them,
+  a cursor that taps the UI, a tag (top left) and a caption (bottom) explaining each step.
+    1 Home: type a plan in one line → send          2 Peek: someone wants the same thing → I'm in
+    3 Plan: Maya proposed → Accept → It's a plan     4 Crowd map: partner café pin → 10% off together
+  Deterministic: window.render(t). Render: FILM=wsupmate-motion.html node render-film.js <puppeteer-core> frames <dir> 30
+  Edit captions in CAPS / TAGS, the camera in CAM, and the cursor in cursorAt().
+-->
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{--g:#1f3a2a;--g2:#2c5139;--y:#ffd66b;--cream:#fbf7ea}
+*{box-sizing:border-box}
+html,body{margin:0;width:1080px;height:1080px;overflow:hidden;font-family:Inter,sans-serif;color:var(--g);
+  background:radial-gradient(80% 60% at 50% 105%,#fbe7a6 0%,rgba(251,231,166,0) 70%),linear-gradient(180deg,#fdfbf3,#f8f1dc)}
+#bg{position:absolute;inset:0;background-image:radial-gradient(rgba(31,58,42,.13) 1.2px,transparent 1.3px);background-size:30px 30px;
+  -webkit-mask:radial-gradient(75% 65% at 50% 45%,#000 30%,transparent)}
+.br{position:absolute;width:24px;height:24px;border:0 solid rgba(31,58,42,.35);z-index:50}
+.tl{left:40px;top:40px;border-left-width:2px;border-top-width:2px}.tr{right:40px;top:40px;border-right-width:2px;border-top-width:2px}
+.bl{left:40px;bottom:40px;border-left-width:2px;border-bottom-width:2px}.brr{right:40px;bottom:40px;border-right-width:2px;border-bottom-width:2px}
+
+/* intro / outro */
+#intro{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;z-index:20}
+#intro .lg{display:flex;align-items:center;gap:20px;font:400 92px 'DM Serif Display';letter-spacing:-.02em}
+#intro .lg img{width:96px;height:96px;border-radius:24px;box-shadow:0 18px 40px -16px rgba(31,58,42,.5)}
+#intro p{margin:0;font:500 30px Inter;color:rgba(31,58,42,.65);letter-spacing:-.01em}
+#intro p b{color:#c99a1a;font-weight:600}
+#play{display:inline-flex;align-items:center;gap:12px;margin-top:6px;padding:10px 20px 10px 12px;border-radius:999px;background:#fff;
+  box-shadow:0 0 0 1px rgba(31,58,42,.1),0 10px 24px -12px rgba(31,58,42,.35);font:600 20px Inter}
+#play img{height:40px}
+
+/* camera + stage */
+#cam{position:absolute;left:0;top:0;width:1080px;height:1080px;z-index:10}
+#stage{position:absolute;left:0;top:0;width:916px;height:872px;transform-origin:0 0}
+.phone{position:absolute;top:0;width:418px;height:872px;border-radius:64px;padding:14px;background:#1d1f1e;
+  box-shadow:inset 0 0 0 2px #46504a,inset 0 0 0 5px #0d0f0e,0 50px 90px -34px rgba(60,50,10,.55),0 18px 30px -18px rgba(31,58,42,.4)}
+#pa{left:0}#pb{left:498px}
+.screen{position:relative;width:390px;height:844px;border-radius:50px;overflow:hidden;background:#f3f1e8}
+.island{position:absolute;left:50%;top:11px;width:118px;height:34px;translate:-50% 0;border-radius:20px;background:#000;z-index:30}
+.scr{position:absolute;left:0;top:0;width:390px;height:844px;opacity:0}
+
+/* typed input on Home (replaces the placeholder pill) */
+.inp{position:absolute;left:20px;top:568px;width:350px;height:60px;border-radius:30px;background:#fff;z-index:5;
+  box-shadow:0 6px 18px -8px rgba(0,0,0,.18);display:flex;align-items:center;padding:0 8px 0 22px;font:500 16px Inter;color:#26302a}
+.inp span{flex:1;white-space:nowrap;overflow:hidden}
+.inp span i{display:inline-block;width:2px;height:19px;background:var(--g);vertical-align:-3px;margin-left:1px}
+.inp em{width:46px;height:46px;border-radius:50%;background:var(--g);display:grid;place-items:center;color:#fff;font:600 20px Inter;font-style:normal}
+.posted{position:absolute;left:20px;right:20px;top:500px;z-index:6;padding:12px 16px;border-radius:16px;background:var(--g);color:#fff;
+  font:500 14px Inter;display:flex;gap:10px;align-items:center;box-shadow:0 14px 30px -12px rgba(31,58,42,.6)}
+.posted b{width:24px;height:24px;border-radius:50%;background:var(--y);color:var(--g);display:grid;place-items:center;font:700 13px Inter}
+
+/* partner café sheet on the Crowd map */
+.cafe{position:absolute;left:12px;right:12px;bottom:106px;z-index:6;padding:18px;border-radius:26px;background:#fff;
+  box-shadow:0 -4px 30px -6px rgba(31,58,42,.25)}
+.cafe .h{display:flex;gap:12px;align-items:center}
+.cafe .h i{width:46px;height:46px;border-radius:14px;background:#fff3cf;display:grid;place-items:center;font-style:normal;font-size:24px}
+.cafe .h b{display:block;font:400 24px 'DM Serif Display';letter-spacing:-.01em}
+.cafe .h small{font:500 12px Inter;color:rgba(31,58,42,.55)}
+.cafe .off{margin-top:14px;display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:#fff8e0;border:1px dashed #e2b93b}
+.cafe .off strong{font:700 30px Inter;letter-spacing:-.02em;color:var(--g)}
+.cafe .off span{font:500 13px/1.35 Inter;color:#4a5a4f}
+.cafe .go{margin-top:12px;height:48px;border-radius:999px;background:var(--g);color:#fff;display:flex;align-items:center;justify-content:center;font:600 15px Inter}
+
+/* overlays in stage space */
+.cursor{position:absolute;width:42px;height:42px;margin:-21px 0 0 -21px;border-radius:50%;z-index:40;border:3px solid #fff;background:rgba(31,58,42,.55);
+  box-shadow:0 0 0 1.5px rgba(31,58,42,.5),0 8px 18px rgba(31,58,42,.35)}
+.ripple{position:absolute;width:42px;height:42px;margin:-21px 0 0 -21px;border-radius:50%;border:3px solid #e2b93b;z-index:39;opacity:0}
+.pill{position:absolute;z-index:41;white-space:nowrap;padding:9px 15px;border-radius:999px;background:var(--y);color:var(--g);font:700 15px Inter;
+  box-shadow:0 10px 26px -8px rgba(160,120,10,.6)}
+
+/* captions + tags (screen space) */
+#cap{position:absolute;left:0;right:0;bottom:0;height:250px;z-index:30;background:linear-gradient(rgba(250,244,226,0),rgba(250,244,226,.94) 52%)}
+#cap p{position:absolute;left:90px;right:90px;bottom:64px;margin:0;text-align:center;font:400 40px/1.15 'DM Serif Display';letter-spacing:-.01em;color:var(--g)}
+#tag{position:absolute;left:72px;top:80px;z-index:30;display:flex;align-items:center;gap:10px;padding:12px 20px 12px 16px;border-radius:999px;
+  background:rgba(255,255,255,.9);box-shadow:0 0 0 1px rgba(31,58,42,.12),0 12px 28px -14px rgba(31,58,42,.4);font:600 22px Inter;color:var(--g)}
+#tag i{width:11px;height:11px;border-radius:50%;background:#e2a91b;box-shadow:0 0 0 4px rgba(226,169,27,.2)}
+#marq{position:absolute;left:0;top:50%;translate:0 -50%;z-index:30;white-space:nowrap;font:400 92px 'DM Serif Display';letter-spacing:-.02em;color:var(--g)}
+#marq b{color:#d6a520;font-weight:400}
+</style></head>
+<body>
+<div id="bg"></div>
+<i class="br tl"></i><i class="br tr"></i><i class="br bl"></i><i class="br brr"></i>
+
+<div id="intro">
+  <div class="lg"><img src="img/icon.png" alt="">W’supMate</div>
+  <p>Say it <b>·</b> Match <b>·</b> Go</p>
+  <div id="play"><img src="../../img/badges/google-play.webp" alt=""></div>
+</div>
+
+<div id="cam"><div id="stage">
+  <div class="phone" id="pa"><div class="screen">
+    <div class="island"></div>
+    <img class="scr" id="a-home" src="../../img/wsupmate/screens/home.jpg" alt="">
+    <img class="scr" id="a-map" src="../../img/wsupmate/screens/crowd-map.jpg" alt="">
+    <div class="inp" id="inp"><span id="typed"></span><em>↑</em></div>
+    <div class="posted" id="posted"><b>✓</b>Posted. Finding people who want the same.</div>
+    <div class="cafe" id="cafe">
+      <div class="h"><i>☕</i><div><b>Partner café</b><small>On the Crowd map, near you</small></div></div>
+      <div class="off"><strong>10%</strong><span>off when you and your match<br>go together</span></div>
+      <div class="go">Take the plan here</div>
+    </div>
+  </div></div>
+
+  <div class="phone" id="pb"><div class="screen">
+    <div class="island"></div>
+    <img class="scr" id="b-peek" src="../../img/wsupmate/screens/peek.jpg" alt="">
+    <img class="scr" id="b-plan" src="../../img/wsupmate/screens/plan.jpg" alt="">
+    <img class="scr" id="b-done" src="../../img/wsupmate/screens/its-a-plan.jpg" alt="">
+  </div></div>
+
+  <div class="ripple" id="rip"></div>
+  <div class="cursor" id="cur"></div>
+  <div class="pill" id="pill">✦ You’re in</div>
+</div></div>
+
+<div id="tag"><i></i><span id="tagt"></span></div>
+<div id="cap"><p id="capt"></p></div>
+<div id="marq">Say it <b>·</b> Match <b>·</b> Go <b>—</b> plans, not profiles <b>·</b> Say it <b>·</b> Match <b>·</b> Go</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+const io = (k) => (k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2);
+const out = (k) => 1 - Math.pow(1 - k, 3);
+const lerp = (a, b, k) => a + (b - a) * k;
+window.DURATION = 16;
+
+// screen point -> stage point (phone A screen starts at 14,14; phone B at 512,14)
+const A = (x, y) => [14 + x, 14 + y], B = (x, y) => [512 + x, 14 + y];
+const P = { start: [300, 900], input: A(150, 598), send: A(339, 598), imin: B(272, 716), accept: B(278, 397),
+            pin: A(112, 272), go: A(195, 714) };
+
+// camera keyframes: [time, cx, cy, scale]
+const WIDE = [458, 436, .98], CA = [209, 500, 1.42], CB = [707, 470, 1.42];
+const CAM = [[0, ...WIDE], [2.7, ...WIDE], [3.6, ...CA], [5.9, ...CA], [6.8, ...CB], [10.1, ...CB], [10.9, 209, 440, 1.42],
+             [12.9, 209, 440, 1.42], [13.7, ...WIDE], [16, ...WIDE]];
+function camAt(t) {
+  for (let i = 0; i < CAM.length - 1; i++) {
+    const [t0, ...a] = CAM[i], [t1, ...b] = CAM[i + 1];
+    if (t <= t1) { const k = io(seg(t, t0, t1)); return a.map((v, j) => lerp(v, b[j], k)); }
+  }
+  return CAM[CAM.length - 1].slice(1);
+}
+function cursorAt(t) {
+  const K = [[3.4, P.start], [4.0, P.input], [4.35, [P.input[0] + 40, P.input[1] + 75]], [5.45, [P.input[0] + 40, P.input[1] + 75]], [5.8, P.send], [6.2, P.send], [7.3, P.imin], [7.9, P.imin],
+             [8.75, P.accept], [9.4, P.accept], [11.4, P.pin], [12.2, P.pin], [12.6, [P.pin[0] + 90, P.pin[1] + 140]]];
+  if (t <= K[0][0]) return K[0][1];
+  for (let i = 0; i < K.length - 1; i++) {
+    const [t0, a] = K[i], [t1, b] = K[i + 1];
+    if (t <= t1) { const k = io(seg(t, t0, t1)); return [lerp(a[0], b[0], k), lerp(a[1], b[1], k)]; }
+  }
+  return K[K.length - 1][1];
+}
+const TAPS = [4.05, 5.85, 7.4, 8.85, 11.5];
+const CAPS = [
+  [3.0, 5.9, 'Say what you feel like doing, in one line'],
+  [6.3, 8.4, 'W’supMate finds people who want the same thing'],
+  [8.6, 10.3, 'Agree a time and a place. Then just go.'],
+  [10.8, 13.2, 'Partner cafés give matched people 10% off, so plans turn into visits'],
+];
+const TAGS = [[3.3, 5.8, 'No profiles, just a plan'], [6.6, 8.3, 'Matched by intent'], [8.7, 10.2, 'One tap to agree'], [11.0, 13.1, 'Café partnership']];
+function textAt(list, t) {
+  for (const [a, b, s] of list) if (t >= a - .35 && t <= b + .35) return [s, Math.min(seg(t, a - .35, a), 1 - seg(t, b, b + .35))];
+  return ['', 0];
+}
+const TYPE = 'sunset run by the canal?';
+const swap = (el, k, dir = 1) => { el.style.opacity = clamp(k * 1.4); el.style.transform = `translateX(${(1 - io(k)) * 60 * dir}px)`; };
+
+function render(t) {
+  // intro / outro logo (identical at 0 and 16 for a seamless loop)
+  const li = t < 8 ? 1 - io(seg(t, 1.9, 2.6)) : io(seg(t, 15.0, 15.8));
+  $('intro').style.opacity = li;
+  $('intro').style.transform = `scale(${1 + (1 - li) * .05})`;
+
+  const sIn = io(seg(t, 2.1, 2.9)), sOut = io(seg(t, 14.4, 15.1)), dimEnd = io(seg(t, 13.4, 14.0));
+  $('cam').style.opacity = sIn * (1 - sOut) * (1 - dimEnd * .78);
+  const [cx, cy, s0] = camAt(t), s = s0 * (.94 + .06 * sIn);
+  $('stage').style.transform = `translate(${540 - cx * s}px, ${500 - cy * s}px) scale(${s})`;
+
+  // phone A: home -> crowd map
+  $('a-home').style.opacity = 1;
+  swap($('a-map'), seg(t, 10.4, 10.95));
+  const typed = Math.floor(TYPE.length * seg(t, 4.3, 5.4));
+  const cleared = t >= 5.95;
+  $('typed').innerHTML = (cleared ? '' : TYPE.slice(0, typed)) + (t > 4.1 && t < 5.95 && (Math.floor(t * 3) % 2 === 0 || typed < TYPE.length) ? '<i></i>' : '');
+  if (t < 4.1) $('typed').innerHTML = '<span style="color:#9aa39d">padel after work, anyone?</span>';
+  $('inp').style.opacity = 1 - seg(t, 10.4, 10.7);
+  const sendDown = t >= 5.85 && t < 6.0;
+  $('inp').querySelector('em').style.transform = `scale(${sendDown ? .86 : 1})`;
+  const po = io(seg(t, 6.0, 6.35)) * (1 - io(seg(t, 9.8, 10.3)));
+  $('posted').style.opacity = po; $('posted').style.transform = `translateY(${(1 - po) * 16}px)`;
+  const cf = io(seg(t, 11.65, 12.1));
+  $('cafe').style.transform = `translateY(${(1 - cf) * 420}px)`;
+
+  // phone B: peek -> plan -> it's a plan
+  $('b-peek').style.opacity = 1;
+  swap($('b-plan'), seg(t, 7.75, 8.25));
+  swap($('b-done'), seg(t, 9.15, 9.6));
+
+  // cursor + taps
+  const [x, y] = cursorAt(t);
+  const cv = seg(t, 3.3, 3.6) * (1 - seg(t, 12.4, 12.7));
+  const tapped = TAPS.find((a) => t >= a && t < a + .5);
+  const press = TAPS.some((a) => t >= a && t < a + .14);
+  Object.assign($('cur').style, { left: x + 'px', top: y + 'px', opacity: cv, transform: `scale(${press ? .78 : 1})` });
+  if (tapped !== undefined) {
+    const k = seg(t, tapped, tapped + .5);
+    Object.assign($('rip').style, { left: x + 'px', top: y + 'px', opacity: (1 - k) * cv, transform: `scale(${1 + k * 1.7})` });
+  } else $('rip').style.opacity = 0;
+
+  // "You're in" pill pops off the button
+  const pk = seg(t, 7.45, 8.2), pv = Math.sin(Math.PI * pk);
+  const pel = $('pill');
+  Object.assign(pel.style, { left: (P.imin[0] - pel.offsetWidth / 2) + 'px', top: (P.imin[1] - 40 - out(pk) * 70) + 'px', opacity: pv });
+
+  // captions + tags
+  const [c, ca] = textAt(CAPS, t); if (c) $('capt').textContent = c;
+  $('capt').style.opacity = ca; $('capt').style.transform = `translateY(${(1 - ca) * 12}px)`;
+  const [g, ga] = textAt(TAGS, t); if (g) $('tagt').textContent = g;
+  $('tag').style.opacity = ga; $('tag').style.transform = `translateX(${(1 - ga) * -16}px)`;
+
+  // closing marquee
+  const mv = seg(t, 13.5, 13.9) * (1 - seg(t, 14.8, 15.2));
+  $('marq').style.opacity = mv;
+  $('marq').style.transform = `translateX(${lerp(1080, -1500, seg(t, 13.3, 15.3))}px)`;
+}
+window.render = render;
+window.ready = Promise.all([document.fonts.ready, ...[...document.images].map((i) => i.decode().catch(() => {}))]).then(() => { render(0); return true; });
+</script>
+</body></html>
