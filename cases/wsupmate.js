@@ -7,6 +7,7 @@
    Rules: no names of ambassadors or partners' staff, never framed as dating, no fake numbers.
 ---------------------------------------------------------------- */
 const WSUP_STORES = [
+  { store: 'appstore',   href: 'https://apps.apple.com/in/app/wsupmate/id6825712555' },
   { store: 'googleplay', href: 'https://play.google.com/store/apps/details?id=com.lookafter.wsup.prod' },
 ];
 const S = (id, label) => ({ src: `img/wsupmate/screens/${id}.jpg`, label });
@@ -39,7 +40,8 @@ const CASE = {
         { label: 'Role',     value: 'Founder & Product Designer' },
         { label: 'Company',  value: 'Look After AI Limited' },
         { label: 'Timeline', value: 'Oct – Nov 2026 (6 weeks)' },
-        { label: 'Status',   value: 'Live on Android, iOS next' },
+        { label: 'Status',   value: 'Live on iOS and Android' },
+        { label: 'Website',  value: 'heywsup.life', href: 'https://www.heywsup.life/' },
       ],
       stores: WSUP_STORES },
 
@@ -58,7 +60,7 @@ const CASE = {
     { type: 'facts',
       eyebrow: 'Project at a glance',
       title: 'From a blank canvas to a *live app* in six weeks',
-      text: 'I took W’supMate from the first logo sketch to an Android app on Google Play, a campus beta with ambassadors, a partner café and a 164-person hackathon, as a solo founder working with AI tools.',
+      text: 'I took W’supMate from the first logo sketch to a live app on the App Store and Google Play, a campus beta with ambassadors, a partner café and a 164-person hackathon, as a solo founder working with AI tools.',
       groups: [
         { label: 'What I did', items: [
           'Defined the product: one-on-one intents, plus Communities for groups',
@@ -68,7 +70,7 @@ const CASE = {
           'Ran the go-to-market: campus beta, café partnership, ambassadors, push notifications',
         ] },
         { label: 'Outcome', items: [
-          'Live on *Google Play*; iOS coming soon',
+          'Live on the *App Store* and *Google Play*',
           '*~135 downloads* from the first campus beta',
           '*164 registrations* for a hackathon promoted through the app',
           '*4 campus ambassadors* on the ground',
@@ -248,7 +250,6 @@ const CASE = {
       title: 'What’s *next*',
       items: [
         { name: 'Measure the gates', tools: 'Analytics', text: '60% of intents matched within 48 hours, 50% of plans actually happen, 30% plan again within two weeks. None of these is measured yet, and they decide when the next campus opens.' },
-        { name: 'Launch on iOS', tools: 'App Store', text: 'Students on iPhone could only DM their intent on X. The App Store screenshots are ready; the build is next.' },
         { name: 'Design the brand side', tools: 'B2B', text: 'Brands and venues are how W’supMate earns. Their side of the product, from listings to offers to results, still needs designing.' },
       ] },
 

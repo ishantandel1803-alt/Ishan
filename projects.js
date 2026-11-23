@@ -42,10 +42,10 @@ const PROJECTS = [
   },
   {
     company: 'W’supMate', audience: 'B2C', descriptor: 'Social · 0→1',
-    title: 'From idea to live on Google Play',
+    title: 'From idea to live on iOS and Android',
     summary: 'I cracked a café deal: its 10% commission funds a discount for matched students, bringing it footfall and us downloads.',
     media: 'img/work/wsupmate-flow.mp4', poster: 'img/work/wsupmate-flow-poster.jpg', position: 'center', filters: ['B2C'], href: 'case.html?p=wsupmate',
-    stores: [{ store: 'googleplay', href: 'https://play.google.com/store/apps/details?id=com.lookafter.wsup.prod' }],
+    stores: [{ store: 'appstore', href: 'https://apps.apple.com/in/app/wsupmate/id6825712555' }, { store: 'googleplay', href: 'https://play.google.com/store/apps/details?id=com.lookafter.wsup.prod' }],
   },
   {
     company: 'DEcent', audience: 'Side project', descriptor: 'Healthtech · Web3',

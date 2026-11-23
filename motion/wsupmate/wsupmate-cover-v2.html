@@ -1,0 +1,125 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>W'supMate cover v2</title>
+<!-- Square cover film (1080x1080). Composites frames recorded from the real W'supMate design exports
+     (frames/<clip>/fNNNN.jpg, made by the deterministic recorder) into a stepped walkthrough.
+     Render: FILM=wsupmate-cover-v2.html node render-film.js <puppeteer-core> frames frames/out 30 -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  @font-face { font-family: "Tan Memories"; src: url("fonts/TanMemories.ttf") format("truetype"); }
+  html, body { margin: 0; background: #F6F6F1; }
+  #stage { position: relative; width: 1080px; height: 1080px; overflow: hidden; font-family: Inter, sans-serif; color: #284732;
+           background: linear-gradient(180deg, #CDEBD2 0%, #E4F1DF 45%, #F6F6F1 100%); }
+  .layer { position: absolute; inset: 0; }
+  #landing img { position: absolute; left: 0; top: 0; width: 1080px; height: 1080px; transform-origin: 50% 22%; }
+  #brand { position: absolute; left: 80px; top: 78px; display: flex; align-items: center; gap: 14px; font: 400 38px "Tan Memories"; letter-spacing: -.01em; }
+  #brand img { width: 46px; height: 46px; border-radius: 12px; }
+  #copy { position: absolute; left: 80px; top: 0; width: 440px; height: 1080px; }
+  .cap { position: absolute; left: 0; top: 400px; width: 440px; }
+  .kicker { display: inline-flex; align-items: center; gap: 10px; font: 600 20px Inter; letter-spacing: .08em; text-transform: uppercase; color: #284732; opacity: .7; }
+  .kicker i { width: 10px; height: 10px; border-radius: 50%; background: #FF8A2B; display: inline-block; }
+  .line { margin-top: 20px; font: 600 58px/1.14 Inter; letter-spacing: -.03em; color: #284732; }
+  #dots { position: absolute; left: 80px; bottom: 92px; display: flex; gap: 10px; }
+  #dots span { width: 34px; height: 5px; border-radius: 3px; background: rgba(40,71,50,.16); overflow: hidden; position: relative; }
+  #dots span b { position: absolute; inset: 0; background: #284732; transform-origin: 0 50%; }
+  #phone { position: absolute; left: 572px; top: 60px; width: 421px; height: 911px; padding: 14px; border-radius: 70px;
+           background: #FFFFFF; box-shadow: 0 0 0 1px rgba(40,71,50,.06), 0 40px 80px -30px rgba(40,71,50,.35), 0 12px 30px rgba(40,71,50,.12); }
+  #screen { position: relative; width: 421px; height: 911px; border-radius: 56px; overflow: hidden; background: #F6F6F1; }
+  #screen img { position: absolute; left: 0; top: 0; width: 421px; height: 911px; }
+  #end { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  #end img { width: 128px; height: 128px; border-radius: 30px; box-shadow: 0 20px 40px -18px rgba(40,71,50,.5); }
+  #end h1 { margin: 34px 0 0; font: 400 128px/1.2 "Tan Memories"; letter-spacing: -.02em; color: #284732; }
+  #end p { margin: 30px 0 0; font: 500 30px Inter; color: #284732; opacity: .75; letter-spacing: .01em; }
+  #end p em { font-style: normal; color: #FF8A2B; padding: 0 10px; }
+</style></head>
+<body>
+<div id="stage">
+  <div class="layer" id="walk">
+    <div id="brand"><img src="img/icon.png" alt=""><span>W’supMate</span></div>
+    <div id="copy"><div class="cap" id="capA"></div><div class="cap" id="capB"></div></div>
+    <div id="dots"></div>
+    <div id="phone"><div id="screen"><img id="scrA" alt=""><img id="scrB" alt=""></div></div>
+  </div>
+  <div class="layer" id="end"><img src="img/icon.png" alt=""><h1>W’supMate</h1><p>Say it<em>·</em>Match<em>·</em>Go</p></div>
+  <div class="layer" id="landing"><img id="land" alt=""></div>
+</div>
+<script>
+const FPS = 30;
+// clip, first source frame (s), seconds on screen, kicker, caption
+const STEPS = [
+  ['home',   0.0, 4.2, 'Say it',  'Say what you feel like doing.'],
+  ['posted', 0.6, 2.8, 'Room',    'A room opens for your plan.'],
+  ['peek',   0.8, 2.4, 'Peek',    'See who wants the same thing.'],
+  ['plan',   0.0, 2.4, 'Plan',    'Agree a time. Then just go.'],
+  ['mate',   0.0, 2.4, 'Mates',   'Keep the people you meet.'],
+  ['crowd',  0.2, 2.6, 'Crowd',   'Find what’s on nearby.'],
+];
+const CLIPLEN = { home: 144, posted: 108, peek: 96, plan: 96, mate: 96, crowd: 108, landing: 120 };
+const LAND = 2.4, X = 0.45, END = 1.9;          // landing hold, crossfade, end card
+let t0 = LAND; STEPS.forEach(s => { s.start = t0; t0 += s[2]; });
+const WALK_END = t0;
+window.DURATION = WALK_END + END;
+
+const $ = (id) => document.getElementById(id);
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const ease = (x) => { x = clamp(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+const out = (x) => 1 - Math.pow(1 - clamp(x), 3);
+const frame = (clip, sec) => `frames/${clip}/f${String(Math.min(CLIPLEN[clip] - 1, Math.max(0, Math.floor(sec * FPS)))).padStart(4, '0')}.jpg`;
+$('dots').innerHTML = STEPS.map(() => '<span><b></b></span>').join('');
+const capHTML = (s, i) => `<div class="kicker"><i></i>${String(i + 1).padStart(2, '0')} · ${s[3]}</div><div class="line">${s[4]}</div>`;
+
+async function setImg(el, src) { if (el.getAttribute('src') !== src) { el.src = src; try { await el.decode(); } catch (e) {} } }
+
+window.render = async (t) => {
+  // which step + local time
+  let i = STEPS.findIndex(s => t < s.start + s[2]); if (i < 0) i = STEPS.length - 1;
+  const s = STEPS[i], lt = t - s.start, prev = STEPS[i - 1];
+  const inX = i > 0 ? clamp(lt / X) : 1;         // transition progress into this step
+  // phone screens: outgoing (A) + incoming (B) slide up / crossfade
+  const jobs = [];
+  if (i > 0 && inX < 1) {
+    jobs.push(setImg($('scrA'), frame(prev[0], prev[1] + prev[2] + lt)));
+    $('scrA').style.opacity = 1; $('scrA').style.transform = `translateY(${-60 * ease(inX)}px) scale(${1 - .04 * ease(inX)})`;
+    $('scrA').style.filter = `brightness(${1 - .25 * ease(inX)})`;
+    $('scrB').style.transform = `translateY(${(1 - ease(inX)) * 911}px)`;
+  } else { $('scrA').style.opacity = 0; $('scrB').style.transform = 'none'; }
+  jobs.push(setImg($('scrB'), frame(s[0], s[1] + Math.max(0, lt))));
+  // captions
+  const a = $('capA'), b = $('capB');
+  if (i > 0 && inX < 1) {
+    a.innerHTML = capHTML(prev, i - 1); a.style.opacity = 1 - out(inX * 1.6); a.style.transform = `translateY(${-30 * out(inX)}px)`;
+  } else a.style.opacity = 0;
+  b.innerHTML = capHTML(s, i);
+  const bIn = i > 0 ? clamp((lt - X * .35) / X) : clamp((t - LAND + .1) / X);
+  b.style.opacity = out(bIn); b.style.transform = `translateY(${36 * (1 - out(bIn))}px)`;
+  // progress dots
+  [...document.querySelectorAll('#dots b')].forEach((el, k) => {
+    const p = k < i ? 1 : k > i ? 0 : clamp(lt / s[2]);
+    el.style.transform = `scaleX(${t < LAND ? 0 : p})`;
+  });
+  // phone entrance after landing
+  const ph = ease((t - LAND + X) / (X * 1.6));
+  $('phone').style.transform = `translateY(${(1 - ph) * 140}px)`; $('walk').style.opacity = clamp((t - LAND + X) / X);
+  // landing (start) — slow push-in, then fade out
+  const landOn = t < LAND + .05 || t > window.DURATION - .5;
+  $('landing').style.display = landOn ? 'block' : 'none';
+  if (t < LAND + .05) {
+    jobs.push(setImg($('land'), frame('landing', t)));
+    $('land').style.transform = `scale(${1 + .05 * ease(t / LAND)})`;
+    $('landing').style.opacity = 1 - clamp((t - LAND + X) / X);
+  } else if (landOn) {                             // loop seam: fade back into landing frame 0
+    jobs.push(setImg($('land'), frame('landing', 0)));
+    $('land').style.transform = 'scale(1)';
+    $('landing').style.opacity = ease((t - (window.DURATION - .5)) / .5);
+  }
+  // end card
+  const e = (t - WALK_END) / X;
+  $('end').style.display = e > 0 ? 'flex' : 'none';
+  $('end').style.opacity = clamp(e); $('end').style.transform = `scale(${1.04 - .04 * out(e)})`;
+  $('end').style.background = 'linear-gradient(180deg, #CDEBD2 0%, #E4F1DF 55%, #F6F6F1 100%)';
+  if (e > 0) $('walk').style.opacity = 1 - clamp(e);
+  await Promise.all(jobs);
+};
+window.ready = (async () => { await document.fonts.ready; await window.render(0); })();
+</script>
+</body></html>

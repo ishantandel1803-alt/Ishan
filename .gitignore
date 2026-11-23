@@ -13,3 +13,7 @@ motion/**/frames/
 
 # private call notes (copy kept in content/mentorship/)
 Mentorship*.pdf
+
+# Design export zips and licensed fonts (kept local)
+*.zip
+motion/wsupmate/fonts/
