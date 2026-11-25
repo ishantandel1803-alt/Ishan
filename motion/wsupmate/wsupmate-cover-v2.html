@@ -79,10 +79,9 @@ window.render = async (t) => {
   const jobs = [];
   if (i > 0 && inX < 1) {
     jobs.push(setImg($('scrA'), frame(prev[0], prev[1] + prev[2] + lt)));
-    $('scrA').style.opacity = 1; $('scrA').style.transform = `translateY(${-60 * ease(inX)}px) scale(${1 - .04 * ease(inX)})`;
-    $('scrA').style.filter = `brightness(${1 - .25 * ease(inX)})`;
-    $('scrB').style.transform = `translateY(${(1 - ease(inX)) * 911}px)`;
-  } else { $('scrA').style.opacity = 0; $('scrB').style.transform = 'none'; }
+    $('scrA').style.opacity = 1;                    // outgoing screen stays underneath
+    $('scrB').style.opacity = ease(inX);             // incoming screen fades in over it
+  } else { $('scrA').style.opacity = 0; $('scrB').style.opacity = 1; }
   jobs.push(setImg($('scrB'), frame(s[0], s[1] + Math.max(0, lt))));
   // captions
   const a = $('capA'), b = $('capB');

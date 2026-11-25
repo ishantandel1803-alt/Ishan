@@ -509,11 +509,13 @@ body[data-bg="hero"]::after { opacity: 0; }
 .pro-foot { margin-top: auto; display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
 .pro-foot .pro-cta { margin-top: 0; }
 .pro-stores { position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: 8px; }
-.pro-store { display: block; line-height: 0; transition: transform .2s ease; }
-a.pro-store:hover { transform: translateY(-2px); }
-.pro-store img { height: 44px; width: auto; }
+.pro-store { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 11px; background: transparent;
+  box-shadow: inset 0 0 0 1px rgba(30,30,32,.12); transition: transform .2s ease, background .2s ease; }
+a.pro-store:hover { transform: translateY(-2px); background: rgba(30,30,32,.04); }
+.pro-store svg { opacity: .85; }
+a.pro-store:hover svg { opacity: 1; }
+.pro-store svg { width: 22px; height: 22px; display: block; }
 .pro-stores { align-items: center; }
-.pro-store img[src*="google-play"] { height: 47px; }
 
 /* "Fixing bugs" hazard sign for unfinished projects */
 .pro-sign {
